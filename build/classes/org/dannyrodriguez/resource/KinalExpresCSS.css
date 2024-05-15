@@ -1,0 +1,36 @@
+MenuBar{
+    -fx-background-color: trasparent;
+    -fx-opacity: 0.5;
+    -fx-border-image-width: 2.0;
+}
+ 
+.button1 {
+    -fx-background-color: transparent;
+}
+ 
+.buntton2 {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;  
+}
+ 
+.button3:hover {
+    -fx-background-color: #86A776;
+    -fx-font-size: 22px;
+    -fx-effect: dropshadow(three-pass-box, black, 20,0,0,0);
+}
+ 
+.button4:hover {
+    -fx-font-size: 22px;
+}
+ 
+.table-view .column-header,
+.table-view .column-header-background.filler{
+    -fx-cell-size: 20;
+    -fx-background-color: #FFC363;    
+}
+ 
+.table-row-cell:selected {
+    -fx-background-color:#FFC363;
+}

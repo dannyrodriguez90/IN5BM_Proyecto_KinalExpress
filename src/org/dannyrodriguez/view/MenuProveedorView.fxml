@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dannyrodriguez.controller.MenuProveedorController">
+   <children>
+      <ImageView fitHeight="540.0" fitWidth="918.0" layoutY="-15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Proveedores.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tblProveedores" layoutX="39.0" layoutY="262.0" prefHeight="186.0" prefWidth="686.0" styleClass="Button1" stylesheets="@../resource/KinalExpresCSS.css">
+        <columns>
+          <TableColumn fx:id="colCodigoProveedor" prefWidth="37.0" text="ID" />
+          <TableColumn fx:id="colNombreProveedor" prefWidth="102.0" text="Nombre" />
+            <TableColumn fx:id="colApellidoProveedor" prefWidth="98.0" text="Apellido" />
+            <TableColumn fx:id="colNITProveedor" prefWidth="68.0" text="Nit" />
+            <TableColumn fx:id="colDireccionProveedor" prefWidth="85.0" text="Direccion" />
+            <TableColumn fx:id="colRazonSocial" prefWidth="85.0" text="RazonSocial" />
+            <TableColumn fx:id="colContactoPrincipal" prefWidth="116.0" text="ContactoPrincipal" />
+            <TableColumn fx:id="colPaginaWeb" prefWidth="94.0" text="PaginaWeb" />
+        </columns>
+      </TableView>
+      <GridPane layoutX="35.0" layoutY="84.0" prefHeight="90.0" prefWidth="200.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="txtCodigoProveedor" prefHeight="18.0" prefWidth="83.0" GridPane.columnIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Century Gothic" size="13.0" />
+               </font></Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Apellido" GridPane.rowIndex="2">
+               <font>
+                  <Font size="13.0" />
+               </font></Text>
+            <TextField fx:id="txtNombreProveedor" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
+            <TextField fx:id="txtApellidoProveedor" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID">
+               <font>
+                  <Font name="Century Gothic" size="13.0" />
+               </font></Text>
+         </children>
+      </GridPane>
+      <GridPane layoutX="272.0" layoutY="76.0" prefHeight="116.0" prefWidth="244.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="129.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="71.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nit">
+               <font>
+                  <Font name="Century Gothic" size="13.0" />
+               </font></Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Direccion" wrappingWidth="106.50439453125" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Century Gothic" size="13.0" />
+               </font></Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="RazonSocial" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Century Gothic" size="13.0" />
+               </font></Text>
+            <TextField fx:id="txtDireccionProveedor" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
+            <TextField fx:id="txtNITProveedor" prefHeight="20.0" prefWidth="91.0" GridPane.columnIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
+            <TextField fx:id="txtRazonSocial" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
+         </children>
+      </GridPane>
+      <GridPane layoutX="14.0" layoutY="386.0" prefHeight="65.0" prefWidth="100.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+      <GridPane layoutX="113.0" layoutY="204.0" prefHeight="46.0" prefWidth="523.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="btnEditarProveedor" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#editar" prefHeight="51.0" prefWidth="120.0" style="-fx-background-color: #F7BFBE;" styleClass="Button1" text="Editar" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </GridPane.margin>
+               <opaqueInsets>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </opaqueInsets>
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Button fx:id="btnAgregarProveedor" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#agregar" prefHeight="62.0" prefWidth="119.0" style="-fx-background-color: #F7BFBE;" styleClass="Button1" text="Agregar" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </GridPane.margin>
+               <opaqueInsets>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </opaqueInsets>
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Button fx:id="btnEliminarProveedor" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#eliminar" prefHeight="64.0" prefWidth="127.0" style="-fx-background-color: #F7BFBE;" styleClass="Button1" text="Eliminar" textOverrun="LEADING_WORD_ELLIPSIS" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Button fx:id="btnReportesProveedores" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="56.0" prefWidth="108.0" style="-fx-background-color: #F7BFBE;" text="Reportes" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Button fx:id="btnRegresar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="55.0" prefWidth="112.0" style="-fx-background-color: #F7BFBE;" text="Regresar" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+            <ImageView fx:id="imgEditar" fitHeight="42.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/archivo-de-registro.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgEliminar" fitHeight="47.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/borrar.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgAgregar" fitHeight="52.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/agregar-paquete.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="44.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/regreso.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgReporte" fitHeight="48.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/reporte.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
+      <GridPane layoutX="524.0" layoutY="76.0" prefHeight="102.0" prefWidth="225.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="129.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="71.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ContactoPrincipal">
+               <font>
+                  <Font name="Century Gothic" size="13.0" />
+               </font>
+            </Text>
+            <TextField fx:id="txtContactoPrincipal" GridPane.columnIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pagina WEB" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Century Gothic" size="13.0" />
+               </font>
+            </Text>
+            <TextField fx:id="txtPaginaWeb" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
