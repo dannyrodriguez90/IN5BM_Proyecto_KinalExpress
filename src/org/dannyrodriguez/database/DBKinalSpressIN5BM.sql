@@ -50,7 +50,7 @@ CREATE TABLE CargoEmpleado (
 
 
 CREATE TABLE Productos(
-	codigoProducto INT NOT NULL,
+	codigoProducto VARCHAR (45) NOT NULL,
     descripcionProducto VARCHAR (45) NOT NULL,
     precioUnitario DECIMAL (10,2),
     precioDocena DECIMAL (10,2),
@@ -537,7 +537,7 @@ DELIMITER ;
 --------------------------------------------------------
 DELIMITER $$
 CREATE PROCEDURE sp_AgregarProducto (
-    IN codigoProducto INT,
+    IN codigoProducto VARCHAR (45),
     IN descripcionProducto VARCHAR(45),
     IN precioUnitario DECIMAL(10,2),
     IN precioDocena DECIMAL(10,2),
@@ -579,7 +579,7 @@ DELIMITER ;
 CALL sp_ListarProducto();
 
 DELIMITER $$
-CREATE PROCEDURE sp_buscarProducto(IN codigoProducto INT)
+CREATE PROCEDURE sp_buscarProducto(IN codigoProducto VARCHAR (45))
 BEGIN
     SELECT
         codigoProducto,
@@ -601,7 +601,7 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE sp_editarProducto (
-    IN codigoProducto INT,
+    IN codigoProducto VARCHAR (45),
     IN descripcionProducto VARCHAR(45),
     IN precioUnitario DECIMAL(10,2),
     IN precioDocena DECIMAL(10,2),
@@ -627,7 +627,7 @@ CALL sp_editarProducto(5, 'Camisa', 25.50, 28.00, 60.00, 100, 1, 1);
 
 
 DELIMITER $$
-CREATE PROCEDURE sp_eliminarProducto (codigoProducto INT)
+CREATE PROCEDURE sp_eliminarProducto (codigoProducto VARCHAR (45))
 BEGIN
     DELETE FROM Productos WHERE codigoProducto = codigoProducto;
 END $$

@@ -13,14 +13,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
 import org.dannyrodriguez.system.Principal;
 
-/**
- *
- * @author lphg3
- */
 public class MenuPrincipalController implements Initializable {
-
     private Principal escenarioPrincipal;
-
     @FXML
     MenuItem btnMenuClientes;
     @FXML
@@ -33,6 +27,8 @@ public class MenuPrincipalController implements Initializable {
     MenuItem btnMenuCompras;
     @FXML
     MenuItem btnMenuCargoEmpleado;
+    @FXML
+    MenuItem btnMenuProductos;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -61,6 +57,8 @@ public class MenuPrincipalController implements Initializable {
             escenarioPrincipal.menuComprasView();
         } else if (event.getSource() == btnMenuCargoEmpleado) {
             escenarioPrincipal.menuCargoEmpleadoView();
+        }else if (event.getSource() == btnMenuProductos) {
+            escenarioPrincipal.menuProductoView();
         }
 
     }

@@ -11,19 +11,18 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="461.0" prefWidth="671.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+<AnchorPane id="AnchorPane" prefHeight="461.0" prefWidth="671.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dannyrodriguez.controller.MenuProductosController">
    <children>
-      <TableView layoutX="16.0" layoutY="147.0" prefHeight="231.0" prefWidth="655.0">
+      <TableView fx:id="tblProductos" layoutX="41.0" layoutY="144.0" prefHeight="231.0" prefWidth="607.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="codigoProducto" />
-          <TableColumn prefWidth="75.0" text="descripcionProducto" />
-            <TableColumn prefWidth="75.0" text="precioUnitario" />
-            <TableColumn prefWidth="75.0" text="precioDocena" />
-            <TableColumn prefWidth="75.0" text="precioMayor" />
-            <TableColumn prefWidth="75.0" text="existencia" />
-            <TableColumn prefWidth="75.0" text="codigoTipoProducto" />
-            <TableColumn prefWidth="75.0" text="codigoProveedor" />
+          <TableColumn fx:id="colCodProd" prefWidth="75.0" text="codigoProducto" />
+          <TableColumn fx:id="colDescProd" prefWidth="75.0" text="descripcionProducto" />
+            <TableColumn fx:id="colPrecioU" prefWidth="75.0" text="precioUnitario" />
+            <TableColumn fx:id="colPrecioD" prefWidth="75.0" text="precioDocena" />
+            <TableColumn fx:id="colPrecioM" prefWidth="75.0" text="precioMayor" />
+            <TableColumn fx:id="colExistencia" prefWidth="75.0" text="existencia" />
+            <TableColumn fx:id="colCodTipoProd" prefWidth="75.0" text="codigoTipoProducto" />
+            <TableColumn fx:id="colCodProv" prefWidth="75.0" text="codigoProveedor" />
         </columns>
       </TableView>
       <GridPane layoutX="457.0" layoutY="38.0">
@@ -38,9 +37,9 @@
         </rowConstraints>
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="codigoTipoProducto" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="cmbCodigoTipoP" prefWidth="150.0" GridPane.columnIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="codigoProveedor" GridPane.rowIndex="1" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cmbCodProv" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <GridPane layoutX="25.0" layoutY="29.0">
@@ -57,9 +56,9 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="codigoProducto" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="descripcion" GridPane.rowIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="precioUnitario" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtCodigoProd" GridPane.columnIndex="1" />
+            <TextField fx:id="txtDescPro" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtPrecioU" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <GridPane layoutX="244.0" layoutY="29.0">
@@ -76,9 +75,9 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="precioDocena" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="precioMayor" GridPane.rowIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="existencia" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtPrecioD" GridPane.columnIndex="1" />
+            <TextField fx:id="txtPrecioM" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtExistencia" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <GridPane layoutX="76.0" layoutY="389.0" prefHeight="45.0" prefWidth="519.0">
@@ -93,11 +92,11 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="135.0" text="Agregar" />
-            <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="121.0" text="Editar" GridPane.columnIndex="1" />
-            <Button mnemonicParsing="false" prefHeight="59.0" prefWidth="150.0" text="Eliminar" GridPane.columnIndex="2" />
-            <Button mnemonicParsing="false" prefHeight="65.0" prefWidth="168.0" text="Reporteria" GridPane.columnIndex="3" />
-            <Button mnemonicParsing="false" prefHeight="87.0" prefWidth="203.0" text="Regresar" GridPane.columnIndex="4" />
+            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregar" prefHeight="56.0" prefWidth="135.0" text="Agregar" />
+            <Button fx:id="btnEditar" mnemonicParsing="false" prefHeight="57.0" prefWidth="121.0" text="Editar" GridPane.columnIndex="1" />
+            <Button fx:id="brnEliminar" mnemonicParsing="false" prefHeight="59.0" prefWidth="150.0" text="Eliminar" GridPane.columnIndex="2" />
+            <Button fx:id="btnReporte" mnemonicParsing="false" prefHeight="65.0" prefWidth="168.0" text="Reporteria" GridPane.columnIndex="3" />
+            <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="87.0" prefWidth="203.0" text="Regresar" GridPane.columnIndex="4" />
          </children>
       </GridPane>
    </children>

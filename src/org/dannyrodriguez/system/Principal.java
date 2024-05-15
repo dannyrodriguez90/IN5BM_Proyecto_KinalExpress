@@ -13,6 +13,7 @@ import org.dannyrodriguez.controller.MenuCargoEmpleadoController;
 import org.dannyrodriguez.controller.MenuClientesController;
 import org.dannyrodriguez.controller.MenuComprasController;
 import org.dannyrodriguez.controller.MenuPrincipalController;
+import org.dannyrodriguez.controller.MenuProductosController;
 import org.dannyrodriguez.controller.MenuProgramadorController;
 import org.dannyrodriguez.controller.MenuProveedorController;
 import org.dannyrodriguez.controller.MenuTipoProductoController;
@@ -111,6 +112,16 @@ public void menuPrincipalView (){
         MenuCargoEmpleadoController menuCargoEmpleadoView = (MenuCargoEmpleadoController)cambiarEscena
         ("MenuCargoEmpleadoView.fxml",625,440 );
         menuCargoEmpleadoView.setEscenarioPrincipal(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage()); 
+        }
+    }
+      
+      public void menuProductoView (){
+    try{
+        MenuProductosController menuProductoView = (MenuProductosController)cambiarEscena
+        ("MenuProductosView.fxml",625,440 );
+        menuProductoView.setEscenarioPrincipal(this);
         }catch(Exception e){
             System.out.println(e.getMessage()); 
         }

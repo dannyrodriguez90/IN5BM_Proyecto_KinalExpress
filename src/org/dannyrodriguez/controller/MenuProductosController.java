@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -30,7 +31,7 @@ public class MenuProductosController implements Initializable{
     private ObservableList <Productos> listaProductos;
     private ObservableList <Proveedor> listaProveedores;
     private ObservableList <TipoDeProducto> listaTipoDeProducto;
-    
+    @FXML private Button btnRegresar;
     @FXML private TextField txtCodigoProd;
     @FXML private TextField txtDescPro;
     @FXML private TextField txtPrecioU;
@@ -110,7 +111,7 @@ public class MenuProductosController implements Initializable{
     public ObservableList<Productos> getProducto(){
     ArrayList<Productos> lista = new ArrayList<Productos>();
     try{
-        PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_mostrarProductos()}");
+        PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarProductos()}");
         ResultSet resultado = procedimiento.executeQuery();
         while(resultado.next()){
             lista.add(new Productos (resultado.getString("codigoProducto"),
@@ -134,7 +135,7 @@ public class MenuProductosController implements Initializable{
     public ObservableList<Proveedor> getProveedores() {
         ArrayList<Proveedor> listaPro = new ArrayList<>();
         try {
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_mostrarproveedor()}");
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarProveedor()}");
             ResultSet resultado = procedimiento.executeQuery();
             while (resultado.next()) {
                 listaPro.add (new Proveedor
@@ -156,7 +157,7 @@ public class MenuProductosController implements Initializable{
      public ObservableList<TipoDeProducto> getTipoP() {
         ArrayList<TipoDeProducto> lista = new ArrayList<>();
         try {
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_mostrarTipoProducto()}");
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarTipoProducto()}");
             ResultSet resultado = procedimiento.executeQuery();
             while (resultado.next()) {
                 lista.add(new TipoDeProducto(resultado.getInt("CodigoTipoProducto"),
@@ -213,7 +214,7 @@ public class MenuProductosController implements Initializable{
          registro.setExistencia(Integer.parseInt(txtExistencia.getText()));
          try {
         PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall
-        ("{CALL sp_agregarProducto(?, ?, ?, ?, ?, ?, ?, ?)}");
+        ("{CALL sp_AgregarProducto(?, ?, ?, ?, ?, ?, ?, ?)}");
         procedimiento.setString(1, registro.getCodigoProducto());
         procedimiento.setString(2, registro.getDescripcionProducto());
         procedimiento.setDouble(3, registro.getPrecioUnitario());
@@ -273,5 +274,13 @@ public class MenuProductosController implements Initializable{
     public void setEscenarioPrincipal(Principal escenarioPrincipal) {
         this.escenarioPrincipal = escenarioPrincipal;
     }
+    
+    @FXML
+  public void handleButtonAction (ActionEvent event){
+        if (event.getSource() == btnRegresar){
+        escenarioPrincipal.menuPrincipalView();
+        }
+    }
+    
     
 }

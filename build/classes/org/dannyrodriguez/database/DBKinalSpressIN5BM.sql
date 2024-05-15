@@ -1,9 +1,6 @@
 DROP DATABASE IF EXISTS DBKinalSpressIN5BM;
-
 CREATE DATABASE DBKinalSpressIN5BM;
-
 USE DBKinalSpressIN5BM;
-
 SET GLOBAL time_zone = '-6:00';
 
 CREATE TABLE Clientes (
@@ -45,10 +42,52 @@ CREATE TABLE Compras (
 
 CREATE TABLE CargoEmpleado (
 	codigoCargoEmpleado INT NOT NULL,
-    nombreCargo VARCHAR (45),
-    descripcionCargo VARCHAR (100),
+    nombreCargo VARCHAR (45) NOT NULL,
+    descripcionCargo VARCHAR (100) NOT NULL,
     PRIMARY KEY PK_codigoCargoEmpleado(codigoCargoEmpleado)
 );
+
+
+
+CREATE TABLE Productos(
+	codigoProducto VARCHAR (45) NOT NULL,
+    descripcionProducto VARCHAR (45) NOT NULL,
+    precioUnitario DECIMAL (10,2),
+    precioDocena DECIMAL (10,2),
+    precioMayor DECIMAL (10,2),
+    existencia INT, 
+    codigoProveedor INT NOT NULL, 
+    codigoTipoProducto INT NOT NULL,
+	constraint FK_codigoProveedor foreign key Proveedores (codigoProveedor)
+	references Proveedores(codigoProveedor),
+    constraint FK_codigoTipoProducto foreign key TipoDeProducto (codigoTipoProducto)
+	references TipoDeProducto (codigoTipoProducto),
+	PRIMARY KEY PK_codigoProducto (codigoProducto)
+);
+
+
+CREATE TABLE Empleados(
+	codigoEmpleado INT NOT NULL,
+    nombresEmpleado VARCHAR (50) NOT NULL,
+    apellidosEmpleado VARCHAR (50) NOT NULL,
+    sueldo DECIMAL (10,2) NOT NULL,
+    direccion VARCHAR (150) NOT NULL,
+    turno VARCHAR (15) NOT NULL,
+    codigoCargoEmpleado INT NOT NULL,
+    constraint FK_codigoCargoEmpleado foreign key CargoEmpleado(codigoCargoEmpleado)
+	references CargoEmpleado(codigoCargoEmpleado),
+	PRIMARY KEY PK_codigoEmpleado (codigoEmpleado)
+);
+
+CREATE TABLE EmailProveedor(
+	codigoEmailProveedor INT NOT NULL, 
+    emailProveedor VARCHAR (50) NOT NULL,
+    descripcion VARCHAR (100) NOT NULL,
+    codigoProveedor INT NOT NULL,
+    
+
+)
+
 ----------------------------------------
 
 
@@ -97,19 +136,21 @@ DELIMITER ;
 CALL sp_ListarClientes();
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_buscarClientes()
+CREATE PROCEDURE sp_buscarCliente(IN clienteId INT)
 BEGIN
     SELECT
-        Clientes.clienteId AS 'ID de Cliente:',
-        Clientes.nombreCliente AS 'Nombre de Cliente:',
-        Clientes.telefonoCliente AS 'Telefono de Cliente:'
+        clienteId,
+        NIT,
+        nombreCliente,
+        apellidoCliente,
+        direccionCliente,
+        telefonoCliente,
+        correoCliente
     FROM
         Clientes
     WHERE
-        Clientes.clienteId = clienteId;
+        clienteId = clienteId;
 END $$
-
 DELIMITER ;
 
 DELIMITER $$
@@ -198,6 +239,26 @@ DELIMITER ;
 
 CALL sp_ListarProveedor();
 
+
+DELIMITER $$
+CREATE PROCEDURE sp_buscarProveedor(IN _codigoProveedor INT)
+BEGIN
+    SELECT
+        codigoProveedor,
+        NITProveedor,
+        nombreProveedor,
+        apellidoProveedor,
+        direccionProveedor,
+        razonSocial,
+        contactoPrincipal,
+        paginaWeb
+    FROM
+        Proveedores
+    WHERE
+        codigoProveedor = _codigoProveedor;
+END $$
+DELIMITER ;
+
 DELIMITER $$
 
 CREATE PROCEDURE sp_editarProveedor (
@@ -249,6 +310,9 @@ END $$
 DELIMITER ;
 CALL sp_AgregarTipoDeProducto(1,'bien');
 CALL sp_AgregarTipoDeProducto(2,'chido');
+CALL sp_AgregarTipoDeProducto(3,'mal');
+CALL sp_AgregarTipoDeProducto(4,'mas o menos');
+
 
 
 
@@ -266,6 +330,20 @@ END $$
 DELIMITER ;
 
 CALL sp_ListarTipoDeProducto();
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_buscarTipoDeProducto(IN codigoTipoProducto INT)
+BEGIN
+    SELECT
+        codigoTipoProducto,
+        descripcion
+    FROM
+        TipoDeProducto
+    WHERE
+        codigoTipoProducto = codigoTipoProducto;
+END $$
+DELIMITER ;
 
 DELIMITER $$
 
@@ -329,6 +407,22 @@ END $$
 DELIMITER ;
 
 CALL sp_ListarCompras();
+
+DELIMITER $$
+CREATE PROCEDURE sp_buscarCompras(IN numeroDocumento INT)
+BEGIN
+    SELECT
+        numeroDocumento,
+        fechaDocumento,
+        descripcion,
+        totalDocumento
+    FROM
+        Compras
+    WHERE
+        numeroDocumento = numeroDocumento;
+END $$
+DELIMITER ;
+
 
 DELIMITER $$
 
@@ -397,8 +491,22 @@ DELIMITER ;
 
 CALL sp_ListarCargoEmpleado();
 
-DELIMITER $$
 
+DELIMITER $$
+CREATE PROCEDURE sp_buscarCargoEmpleado(IN codigoCargoEmpleado INT)
+BEGIN
+    SELECT
+        codigoCargoEmpleado,
+        nombreCargo,
+        descripcionCargo
+    FROM
+        CargoEmpleado
+    WHERE
+        codigoCargoEmpleado = codigoCargoEmpleado;
+END $$
+DELIMITER ;
+
+DELIMITER $$
 CREATE PROCEDURE sp_editarCargoEmpleado(
     IN codigoCargoEmpleado INT,
     IN nombreCargo VARCHAR(45),
@@ -414,14 +522,215 @@ END $$
 
 DELIMITER ;
 
+
 CALL sp_editarCargoEmpleado(3,'Juan','Es bolo');
 
 DELIMITER $$
-
 CREATE PROCEDURE sp_eliminarCargoEmpleado(IN codigoCargoEmpleado INT)
 BEGIN
     DELETE FROM CargoEmpleado WHERE codigoCargoEmpleado = codigoCargoEmpleado;
 END $$
 
 DELIMITER ;
+---------------------------------------------------------
 
+--------------------------------------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_AgregarProducto (
+    IN codigoProducto VARCHAR (45),
+    IN descripcionProducto VARCHAR(45),
+    IN precioUnitario DECIMAL(10,2),
+    IN precioDocena DECIMAL(10,2),
+    IN precioMayor DECIMAL(10,2),
+    IN existencia INT,
+    IN codigoProveedor INT,
+    IN codigoTipoProducto INT
+)
+BEGIN
+    INSERT INTO Productos(codigoProducto, descripcionProducto, precioUnitario, precioDocena, precioMayor, existencia, codigoProveedor, codigoTipoProducto)
+    VALUES (codigoProducto, descripcionProducto, precioUnitario, precioDocena, precioMayor, existencia, codigoProveedor, codigoTipoProducto);
+END $$
+DELIMITER ;
+
+CALL sp_AgregarProducto(1, 'Camisa', 25.50, 28.00, 60.00, 100, 1, 1);
+CALL sp_AgregarProducto(2, 'Pantalón', 35.75, 39.00, 85.00, 80, 2, 2);
+CALL sp_AgregarProducto(3, 'Zapatos', 50.00, 55.00, 12.00, 50, 3, 3);
+CALL sp_AgregarProducto(4, 'Corbata', 15.25, 16.00, 35.00, 120, 4, 4);
+
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_ListarProducto()
+BEGIN
+    SELECT
+        P.codigoProducto,
+        P.descripcionProducto,
+        P.precioUnitario,
+        P.precioDocena,
+        P.precioMayor,
+        P.existencia,
+        P.codigoProveedor,
+        P.codigoTipoProducto
+    FROM
+        Productos P;
+END $$
+DELIMITER ;
+
+CALL sp_ListarProducto();
+
+DELIMITER $$
+CREATE PROCEDURE sp_buscarProducto(IN codigoProducto VARCHAR (45))
+BEGIN
+    SELECT
+        codigoProducto,
+        descripcionProducto,
+        precioUnitario,
+        precioDocena,
+        precioMayor,
+        existencia,
+        codigoProveedor,
+        codigoTipoProducto
+    FROM
+        Productos
+    WHERE
+        codigoProducto = codigoProducto;
+END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_editarProducto (
+    IN codigoProducto VARCHAR (45),
+    IN descripcionProducto VARCHAR(45),
+    IN precioUnitario DECIMAL(10,2),
+    IN precioDocena DECIMAL(10,2),
+    IN precioMayor DECIMAL(10,2),
+    IN existencia INT,
+    IN codigoProveedor INT,
+    IN codigoTipoProducto INT
+)
+BEGIN
+    UPDATE Productos SET
+        Productos.descripcionProducto = descripcionProducto,
+        Productos.precioUnitario = precioUnitario,
+        Productos.precioDocena = precioDocena,
+        Productos.precioMayor = precioMayor,
+        Productos.existencia = existencia,
+        Productos.codigoProveedor = codigoProveedor,
+        Productos.codigoTipoProducto = codigoTipoProducto
+    WHERE
+        Productos.codigoProducto = codigoProducto;
+END $$
+DELIMITER ;
+CALL sp_editarProducto(5, 'Camisa', 25.50, 28.00, 60.00, 100, 1, 1);
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_eliminarProducto (codigoProducto VARCHAR (45))
+BEGIN
+    DELETE FROM Productos WHERE codigoProducto = codigoProducto;
+END $$
+
+DELIMITER ;
+
+------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_AgregarEmpleado (
+    IN codigoEmpleado INT,
+    IN nombresEmpleado VARCHAR(50),
+    IN apellidosEmpleado VARCHAR(50),
+    IN sueldo DECIMAL(10,2),
+    IN direccion VARCHAR(150),
+    IN turno VARCHAR(15),
+    IN codigoCargoEmpleado INT
+)
+BEGIN
+    INSERT INTO Empleados(codigoEmpleado, nombresEmpleado, apellidosEmpleado, sueldo, direccion, turno, codigoCargoEmpleado)
+    VALUES (codigoEmpleado, nombresEmpleado, apellidosEmpleado, sueldo, direccion, turno, codigoCargoEmpleado);
+END $$
+
+DELIMITER ;
+
+CALL sp_AgregarEmpleado(1, 'Juan', 'Pérez', 15.00, '123 Main Street', 'Matutino', 1);
+CALL sp_AgregarEmpleado(2, 'María', 'González', 18.00, '456 Oak Avenue', 'Vespertino', 2);
+CALL sp_AgregarEmpleado(3, 'Carlos', 'López', 16.00, '789 Elm Street', 'Nocturno', 3);
+CALL sp_AgregarEmpleado(4, 'Laura', 'Martínez', 17.00, '321 Pine Street', 'Matutino', 4);
+CALL sp_AgregarEmpleado(5, 'Ana', 'Sánchez', 19.00, '654 Cedar Avenue', 'Vespertino', 5);
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_ListarEmpleado()
+BEGIN
+    SELECT
+        E.codigoEmpleado,
+        E.nombresEmpleado,
+        E.apellidosEmpleado,
+        E.sueldo,
+        E.direccion,
+        E.turno,
+        E.codigoCargoEmpleado
+    FROM
+        Empleados E;
+END $$
+
+DELIMITER ;
+
+CALL sp_ListarEmpleado();
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_buscarEmpleado(IN codigoEmpleado INT)
+BEGIN
+    SELECT
+        codigoEmpleado,
+        nombresEmpleado,
+        apellidosEmpleado,
+        sueldo,
+        direccion,
+        turno,
+        codigoCargoEmpleado
+    FROM
+        Empleados
+    WHERE
+        codigoEmpleado = codigoEmpleado;
+END $$
+DELIMITER ;
+
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_editarEmpleado (
+    IN codigoEmpleado INT,
+    IN nombresEmpleado VARCHAR(50),
+    IN apellidosEmpleado VARCHAR(50),
+    IN sueldo DECIMAL(10,2),
+    IN direccion VARCHAR(150),
+    IN turno VARCHAR(15),
+    IN codigoCargoEmpleado INT
+)
+BEGIN
+    UPDATE Empleados SET
+        Empleados.nombresEmpleado = nombresEmpleado,
+        Empleados.apellidosEmpleado = apellidosEmpleado,
+        Empleados.sueldo = sueldo,
+        Empleados.direccion = direccion,
+        Empleados.turno = turno,
+        Empleados.codigoCargoEmpleado = codigoCargoEmpleado
+    WHERE
+        Empleados.codigoEmpleado = codigoEmpleado;
+END $$
+
+DELIMITER ;
+CALL sp_editarEmpleado(1,'Juanito', 'Pérez',20.00,'123 Main Street','Nocturno',1);
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_eliminarEmpleado (codigoEmpleado INT)
+BEGIN
+    DELETE FROM Empleados WHERE codigoEmpleado = codigoEmpleado;
+END $$
+
+DELIMITER ;
