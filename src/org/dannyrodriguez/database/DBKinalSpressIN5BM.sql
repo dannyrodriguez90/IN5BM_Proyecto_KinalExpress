@@ -136,19 +136,21 @@ DELIMITER ;
 CALL sp_ListarClientes();
 
 DELIMITER $$
-
-CREATE PROCEDURE sp_buscarClientes()
+CREATE PROCEDURE sp_buscarCliente(IN clienteId INT)
 BEGIN
     SELECT
-        Clientes.clienteId AS 'ID de Cliente:',
-        Clientes.nombreCliente AS 'Nombre de Cliente:',
-        Clientes.telefonoCliente AS 'Telefono de Cliente:'
+        clienteId,
+        NIT,
+        nombreCliente,
+        apellidoCliente,
+        direccionCliente,
+        telefonoCliente,
+        correoCliente
     FROM
         Clientes
     WHERE
-        Clientes.clienteId = clienteId;
+        clienteId = clienteId;
 END $$
-
 DELIMITER ;
 
 DELIMITER $$
@@ -237,6 +239,26 @@ DELIMITER ;
 
 CALL sp_ListarProveedor();
 
+
+DELIMITER $$
+CREATE PROCEDURE sp_buscarProveedor(IN _codigoProveedor INT)
+BEGIN
+    SELECT
+        codigoProveedor,
+        NITProveedor,
+        nombreProveedor,
+        apellidoProveedor,
+        direccionProveedor,
+        razonSocial,
+        contactoPrincipal,
+        paginaWeb
+    FROM
+        Proveedores
+    WHERE
+        codigoProveedor = _codigoProveedor;
+END $$
+DELIMITER ;
+
 DELIMITER $$
 
 CREATE PROCEDURE sp_editarProveedor (
@@ -309,6 +331,20 @@ DELIMITER ;
 
 CALL sp_ListarTipoDeProducto();
 
+
+DELIMITER $$
+CREATE PROCEDURE sp_buscarTipoDeProducto(IN codigoTipoProducto INT)
+BEGIN
+    SELECT
+        codigoTipoProducto,
+        descripcion
+    FROM
+        TipoDeProducto
+    WHERE
+        codigoTipoProducto = codigoTipoProducto;
+END $$
+DELIMITER ;
+
 DELIMITER $$
 
 CREATE PROCEDURE sp_editarTipoDeProducto (IN codigoTipoProducto INT, IN descripcion VARCHAR(45))
@@ -371,6 +407,22 @@ END $$
 DELIMITER ;
 
 CALL sp_ListarCompras();
+
+DELIMITER $$
+CREATE PROCEDURE sp_buscarCompras(IN numeroDocumento INT)
+BEGIN
+    SELECT
+        numeroDocumento,
+        fechaDocumento,
+        descripcion,
+        totalDocumento
+    FROM
+        Compras
+    WHERE
+        numeroDocumento = numeroDocumento;
+END $$
+DELIMITER ;
+
 
 DELIMITER $$
 
@@ -438,6 +490,21 @@ END $$
 DELIMITER ;
 
 CALL sp_ListarCargoEmpleado();
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_buscarCargoEmpleado(IN codigoCargoEmpleado INT)
+BEGIN
+    SELECT
+        codigoCargoEmpleado,
+        nombreCargo,
+        descripcionCargo
+    FROM
+        CargoEmpleado
+    WHERE
+        codigoCargoEmpleado = codigoCargoEmpleado;
+END $$
+DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE sp_editarCargoEmpleado(
@@ -510,6 +577,26 @@ END $$
 DELIMITER ;
 
 CALL sp_ListarProducto();
+
+DELIMITER $$
+CREATE PROCEDURE sp_buscarProducto(IN codigoProducto INT)
+BEGIN
+    SELECT
+        codigoProducto,
+        descripcionProducto,
+        precioUnitario,
+        precioDocena,
+        precioMayor,
+        existencia,
+        codigoProveedor,
+        codigoTipoProducto
+    FROM
+        Productos
+    WHERE
+        codigoProducto = codigoProducto;
+END $$
+DELIMITER ;
+
 
 
 DELIMITER $$
@@ -593,6 +680,26 @@ DELIMITER ;
 
 CALL sp_ListarEmpleado();
 
+
+DELIMITER $$
+CREATE PROCEDURE sp_buscarEmpleado(IN codigoEmpleado INT)
+BEGIN
+    SELECT
+        codigoEmpleado,
+        nombresEmpleado,
+        apellidosEmpleado,
+        sueldo,
+        direccion,
+        turno,
+        codigoCargoEmpleado
+    FROM
+        Empleados
+    WHERE
+        codigoEmpleado = codigoEmpleado;
+END $$
+DELIMITER ;
+
+
 DELIMITER $$
 
 CREATE PROCEDURE sp_editarEmpleado (
@@ -627,5 +734,3 @@ BEGIN
 END $$
 
 DELIMITER ;
-
-
