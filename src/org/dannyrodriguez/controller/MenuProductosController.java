@@ -30,7 +30,7 @@ public class MenuProductosController implements Initializable{
     private operaciones tipoDeOperacion = operaciones.NINGUNO;
     private ObservableList <Productos> listaProductos;
     private ObservableList <Proveedor> listaProveedores;
-    private ObservableList <TipoDeProducto> listaTipoDeProducto;
+    private ObservableList <TipoDeProducto> listaTiposProducto;
     @FXML private Button btnRegresar;
     @FXML private TextField txtCodigoProd;
     @FXML private TextField txtDescPro;
@@ -111,7 +111,7 @@ public class MenuProductosController implements Initializable{
     public ObservableList<Productos> getProducto(){
     ArrayList<Productos> lista = new ArrayList<Productos>();
     try{
-        PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarProductos()}");
+        PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarProducto()}");
         ResultSet resultado = procedimiento.executeQuery();
         while(resultado.next()){
             lista.add(new Productos (resultado.getString("codigoProducto"),
@@ -133,12 +133,12 @@ public class MenuProductosController implements Initializable{
         
     }
     public ObservableList<Proveedor> getProveedores() {
-        ArrayList<Proveedor> listaPro = new ArrayList<>();
+        ArrayList<Proveedor> lista = new ArrayList<>();
         try {
             PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarProveedor()}");
             ResultSet resultado = procedimiento.executeQuery();
             while (resultado.next()) {
-                listaPro.add (new Proveedor
+                lista.add (new Proveedor
                         (resultado.getInt("codigoProveedor"),
                         resultado.getString("NITProveedor"),
                         resultado.getString("nombreProveedor"),
@@ -152,12 +152,12 @@ public class MenuProductosController implements Initializable{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return listaProveedores = FXCollections.observableList(listaPro);
+        return listaProveedores = FXCollections.observableList(lista);
     }
      public ObservableList<TipoDeProducto> getTipoP() {
         ArrayList<TipoDeProducto> lista = new ArrayList<>();
         try {
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarTipoProducto()}");
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarTipoDeProducto()}");
             ResultSet resultado = procedimiento.executeQuery();
             while (resultado.next()) {
                 lista.add(new TipoDeProducto(resultado.getInt("CodigoTipoProducto"),
@@ -168,7 +168,7 @@ public class MenuProductosController implements Initializable{
             e.printStackTrace();
         }
 
-        return listaTipoDeProducto = FXCollections.observableList(lista);
+        return listaTiposProducto = FXCollections.observableList(lista);
     }
     
      public void agregar (){

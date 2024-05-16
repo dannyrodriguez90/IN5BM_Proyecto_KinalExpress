@@ -61,11 +61,10 @@ public class MenuTipoProductoController implements Initializable {
     private TableColumn colDescripcion;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        listaTiposProducto = FXCollections.observableArrayList();
+    public void initialize(URL url, ResourceBundle rb) {
         cargarDatos();
+        desactivarControles();
     }
-
     public Principal getEscenarioPrincipal() {
         return escenarioPrincipal;
     }

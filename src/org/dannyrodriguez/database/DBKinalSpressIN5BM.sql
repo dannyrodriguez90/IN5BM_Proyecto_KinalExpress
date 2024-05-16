@@ -15,10 +15,10 @@ CREATE TABLE Clientes (
 );
 
 CREATE TABLE Proveedores(
-    codigoProveedor INT NOT NULL,
-    NITProveedor VARCHAR(10) NOT NULL,
-    nombreProveedor VARCHAR(60) NOT NULL,
-    apellidoProveedor VARCHAR(60) NOT NULL,
+    codigoProveedor INT,
+    NITProveedor VARCHAR(10),
+    nombreProveedor VARCHAR(60),
+    apellidoProveedor VARCHAR(60),
     direccionProveedor VARCHAR(150),
     razonSocial VARCHAR(60),
     contactoPrincipal VARCHAR(100),
@@ -27,8 +27,8 @@ CREATE TABLE Proveedores(
 );
 
 CREATE TABLE TipoDeProducto(
-    codigoTipoProducto INT NOT NULL,
-    descripcion VARCHAR(45) NOT NULL,
+    codigoTipoProducto INT,
+    descripcion VARCHAR(45),
     PRIMARY KEY PK_codigoTipoDeProducto(codigoTipoProducto)
 );
 
@@ -50,18 +50,16 @@ CREATE TABLE CargoEmpleado (
 
 
 CREATE TABLE Productos(
-	codigoProducto VARCHAR (45) NOT NULL,
-    descripcionProducto VARCHAR (45) NOT NULL,
+	codigoProducto VARCHAR (45),
+    descripcionProducto VARCHAR (45),
     precioUnitario DECIMAL (10,2),
     precioDocena DECIMAL (10,2),
     precioMayor DECIMAL (10,2),
     existencia INT, 
-    codigoProveedor INT NOT NULL, 
-    codigoTipoProducto INT NOT NULL,
-	constraint FK_codigoProveedor foreign key Proveedores (codigoProveedor)
-	references Proveedores(codigoProveedor),
-    constraint FK_codigoTipoProducto foreign key TipoDeProducto (codigoTipoProducto)
-	references TipoDeProducto (codigoTipoProducto),
+    codigoProveedor INT, 
+    codigoTipoProducto INT,
+    foreign key (codigoTipoProducto) references TipoDeProducto(codigoTipoProducto),
+	foreign key (codigoProveedor) references Proveedores(codigoProveedor),
 	PRIMARY KEY PK_codigoProducto (codigoProducto)
 );
 
@@ -79,14 +77,8 @@ CREATE TABLE Empleados(
 	PRIMARY KEY PK_codigoEmpleado (codigoEmpleado)
 );
 
-CREATE TABLE EmailProveedor(
-	codigoEmailProveedor INT NOT NULL, 
-    emailProveedor VARCHAR (50) NOT NULL,
-    descripcion VARCHAR (100) NOT NULL,
-    codigoProveedor INT NOT NULL,
-    
 
-)
+
 
 ----------------------------------------
 
@@ -153,6 +145,9 @@ BEGIN
 END $$
 DELIMITER ;
 
+
+
+
 DELIMITER $$
 
 CREATE PROCEDURE sp_editarClientes(
@@ -178,16 +173,18 @@ END $$
 
 DELIMITER ;
 
-CALL sp_editarClientes(1,'f','fh','hf','fhf','fhgfhf','fghfghfg');
+CALL sp_editarClientes(2,'f','fh','hf','fhf','fhgfhf','fghfghfg');
 
-DELIMITER $$
 
-CREATE PROCEDURE sp_eliminarClientes(IN clienteId INT)
-BEGIN
-    DELETE FROM Clientes WHERE clienteId = clienteId;
-END $$
+Delimiter $$
+	Create procedure sp_EliminarClientes (in cliID int)
+		Begin 
+			Delete from Clientes
+				where clienteID = cliID;
+		End $$
+Delimiter ;
 
-DELIMITER ;
+call sp_EliminarClientes(3);
 
 -------------------------------------------------------------
 
@@ -259,6 +256,9 @@ BEGIN
 END $$
 DELIMITER ;
 
+
+
+
 DELIMITER $$
 
 CREATE PROCEDURE sp_editarProveedor (
@@ -288,14 +288,16 @@ DELIMITER ;
 
 CALL sp_editarProveedor(1,'viendo','con los ojos','omg','estas hablando','partido','omg','olaa');
 
-DELIMITER $$
 
-CREATE PROCEDURE sp_eliminarProveedor (codigoProveedor INT)
-BEGIN
-    DELETE FROM Proveedores WHERE codigoProveedor = codigoProveedor;
-END $$
+Delimiter $$
+	Create procedure sp_eliminarProveedor (in proveeID int)
+		Begin 
+			Delete from Proveedores
+				where codigoProveedor = proveeID;
+		End $$
+Delimiter ; 
 
-DELIMITER ;
+CALL sp_eliminarProveedor(8);
 
 ------------------------------------------------------------------------------
 
@@ -314,10 +316,7 @@ CALL sp_AgregarTipoDeProducto(3,'mal');
 CALL sp_AgregarTipoDeProducto(4,'mas o menos');
 
 
-
-
 DELIMITER $$
-
 CREATE PROCEDURE sp_ListarTipoDeProducto()
 BEGIN
     SELECT
@@ -345,6 +344,9 @@ BEGIN
 END $$
 DELIMITER ;
 
+
+
+
 DELIMITER $$
 
 CREATE PROCEDURE sp_editarTipoDeProducto (IN codigoTipoProducto INT, IN descripcion VARCHAR(45))
@@ -359,15 +361,18 @@ DELIMITER ;
 
 CALL sp_editarTipoDeProducto(8,'dinamico y mega realista');
 
-DELIMITER $$
 
-CREATE PROCEDURE sp_eliminarTipoDeProducto (codigoTipoProducto INT)
-BEGIN
-    DELETE FROM TipoDeProducto WHERE codigoTipoProducto = codigoTipoProducto;
-END $$
 
-DELIMITER ;
- 
+Delimiter $$
+	Create procedure sp_eliminarTipoDeProducto (in TipoProductoID int)
+		Begin 
+			Delete from TipoDeProducto
+				where codigoTipoProducto = TipoProductoID;
+		End $$
+Delimiter ; 
+
+CALL sp_eliminarTipoDeProducto(5);
+
 --------------------------------------------------------------------------------
 
 DELIMITER $$
@@ -424,6 +429,8 @@ END $$
 DELIMITER ;
 
 
+
+
 DELIMITER $$
 
 CREATE PROCEDURE sp_editarCompras (
@@ -445,14 +452,18 @@ DELIMITER ;
 
 CALL sp_editarCompras(4,'2008-04-23','oooop', 58.00);
 
+
 DELIMITER $$
 
-CREATE PROCEDURE sp_eliminarCompras (numeroDocumento INT)
-BEGIN
-    DELETE FROM Compras WHERE numeroDocumento = numeroDocumento;
-END $$
+Delimiter $$
+	Create procedure sp_eliminarCompras (in compraID int)
+		Begin 
+			Delete from Compras
+				where numeroDocumento = compraID;
+		End $$
+Delimiter ; 
 
-DELIMITER ;
+CALL sp_eliminarCompras(6);
 
 -----------------------------------------------------------------------------------
 DELIMITER $$
@@ -525,13 +536,17 @@ DELIMITER ;
 
 CALL sp_editarCargoEmpleado(3,'Juan','Es bolo');
 
-DELIMITER $$
-CREATE PROCEDURE sp_eliminarCargoEmpleado(IN codigoCargoEmpleado INT)
-BEGIN
-    DELETE FROM CargoEmpleado WHERE codigoCargoEmpleado = codigoCargoEmpleado;
-END $$
 
-DELIMITER ;
+Delimiter $$
+	Create procedure sp_eliminarCargoEmpleado (in CargoEmpleadoID int)
+		Begin 
+			Delete from CargoEmpleado
+				where codigoCargoEmpleado = CargoEmpleadoID;
+		End $$
+Delimiter ; 
+
+CALL sp_eliminarCargoEmpleado(6);
+
 ---------------------------------------------------------
 
 --------------------------------------------------------
@@ -552,10 +567,10 @@ BEGIN
 END $$
 DELIMITER ;
 
-CALL sp_AgregarProducto(1, 'Camisa', 25.50, 28.00, 60.00, 100, 1, 1);
-CALL sp_AgregarProducto(2, 'Pantalón', 35.75, 39.00, 85.00, 80, 2, 2);
-CALL sp_AgregarProducto(3, 'Zapatos', 50.00, 55.00, 12.00, 50, 3, 3);
-CALL sp_AgregarProducto(4, 'Corbata', 15.25, 16.00, 35.00, 120, 4, 4);
+CALL sp_AgregarProducto('1', 'Camisa', 25.50, 28.00, 60.00, 100, 2, 2);
+CALL sp_AgregarProducto('2', 'Pantalón', 35.75, 39.00, 85.00, 80, 3, 3);
+CALL sp_AgregarProducto('3', 'Zapatos', 50.00, 55.00, 12.00, 50, 4, 4);
+CALL sp_AgregarProducto('4', 'Corbata', 15.25, 16.00, 35.00, 120, 1, 1);
 
 
 
@@ -597,6 +612,8 @@ BEGIN
 END $$
 DELIMITER ;
 
+call sp_buscarProducto(1);
+
 
 
 DELIMITER $$
@@ -623,16 +640,21 @@ BEGIN
         Productos.codigoProducto = codigoProducto;
 END $$
 DELIMITER ;
-CALL sp_editarProducto(5, 'Camisa', 25.50, 28.00, 60.00, 100, 1, 1);
+CALL sp_editarProducto('5', 'Camisa', 25.50, 28.00, 60.00, 100, 1, 1);
 
 
-DELIMITER $$
-CREATE PROCEDURE sp_eliminarProducto (codigoProducto VARCHAR (45))
-BEGIN
-    DELETE FROM Productos WHERE codigoProducto = codigoProducto;
-END $$
 
-DELIMITER ;
+Delimiter $$
+	Create procedure sp_eliminarProducto (in ProductoID varchar (45))
+		Begin 
+			Delete from Productos
+				where codigoProducto = ProductoID;
+		End $$
+Delimiter ; 
+
+CALL sp_eliminarProducto('6');
+
+
 
 ------------------------------------------
 
