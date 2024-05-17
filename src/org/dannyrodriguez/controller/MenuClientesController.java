@@ -212,6 +212,10 @@ public class MenuClientesController implements Initializable {
     public void cancelar() {
 
     }
+    
+    
+    
+    
 
     public void cargarDatos() {
         tblClientes.setItems(getClientes());

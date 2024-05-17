@@ -90,4 +90,11 @@ public class Proveedor {
     public void setPaginaWeb(String paginaWeb) {
         this.paginaWeb = paginaWeb;
     }
+    
+    @Override
+    public String toString() {
+        return getNITProveedor()+ " | " + getNombreProveedor();
+    }
+
+   
 }

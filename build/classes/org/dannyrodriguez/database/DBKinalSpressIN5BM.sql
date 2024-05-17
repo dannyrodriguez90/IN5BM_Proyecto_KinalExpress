@@ -257,7 +257,7 @@ END $$
 DELIMITER ;
 
 
-
+call sp_buscarProveedor(3);
 
 DELIMITER $$
 
@@ -344,6 +344,8 @@ BEGIN
 END $$
 DELIMITER ;
 
+
+call sp_buscarTipoDeProducto(2);
 
 
 

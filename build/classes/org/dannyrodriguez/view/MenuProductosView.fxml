@@ -93,8 +93,8 @@
         </rowConstraints>
          <children>
             <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregar" prefHeight="56.0" prefWidth="135.0" text="Agregar" />
-            <Button fx:id="btnEditar" mnemonicParsing="false" prefHeight="57.0" prefWidth="121.0" text="Editar" GridPane.columnIndex="1" />
-            <Button fx:id="brnEliminar" mnemonicParsing="false" prefHeight="59.0" prefWidth="150.0" text="Eliminar" GridPane.columnIndex="2" />
+            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="57.0" prefWidth="121.0" text="Editar" GridPane.columnIndex="1" />
+            <Button fx:id="brnEliminar" mnemonicParsing="false" onAction="#eliminar" prefHeight="59.0" prefWidth="150.0" text="Eliminar" GridPane.columnIndex="2" />
             <Button fx:id="btnReporte" mnemonicParsing="false" prefHeight="65.0" prefWidth="168.0" text="Reporteria" GridPane.columnIndex="3" />
             <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="87.0" prefWidth="203.0" text="Regresar" GridPane.columnIndex="4" />
          </children>
