@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -247,31 +246,44 @@ public class MenuProductosController implements Initializable {
     }
 
     public void guardar() {
-        Productos registro = new Productos();
-        registro.setCodigoProducto(txtCodigoProd.getText());
-        registro.setCodigoProveedor(((Proveedor) cmbCodigoP.getSelectionModel().getSelectedItem()).getCodigoProveedor());
-        registro.setCodigoTipoProducto(((TipoDeProducto) cmbCodigoTipoP.getSelectionModel().getSelectedItem()).getCodigoTipoProducto());
-        registro.setDescripcionProducto(txtDescPro.getText());
-        registro.setPrecioDocena(Double.parseDouble(txtPrecioD.getText()));
-        registro.setPrecioMayor(Double.parseDouble(txtPrecioM.getText()));
-        registro.setExistencia(Integer.parseInt(txtExistencia.getText()));
-        registro.setPrecioUnitario(Double.parseDouble(txtPrecioU.getText()));
-
+        Productos reg = new Productos();
+        Object tipoProductoSeleccionadoObj = cmbCodigoTipoP.getSelectionModel().getSelectedItem();
+        if (tipoProductoSeleccionadoObj instanceof TipoDeProducto) {
+            TipoDeProducto tipoProductoSeleccionado = (TipoDeProducto) tipoProductoSeleccionadoObj;
+            reg.setCodigoTipoProducto(tipoProductoSeleccionado.getCodigoTipoProducto());
+        } else {
+            System.err.println("Error: Debe seleccionar un tipo de producto válido.");
+            return;
+        }
+        Object proveedorSeleccionadoObj = cmbCodigoP.getSelectionModel().getSelectedItem();
+        if (proveedorSeleccionadoObj instanceof Proveedor) {
+            Proveedor proveedorSeleccionado = (Proveedor) proveedorSeleccionadoObj;
+            reg.setCodigoProveedor(proveedorSeleccionado.getCodigoProveedor());
+        } else {
+            System.err.println("Error: Debe seleccionar un proveedor válido.");
+            return;
+        }
+        reg.setCodigoProducto(txtCodigoProd.getText());
+        reg.setDescripcionProducto(txtDescPro.getText());
+        reg.setPrecioUnitario(Double.parseDouble(txtPrecioU.getText()));
+        reg.setPrecioDocena(Double.parseDouble(txtPrecioD.getText()));
+        reg.setPrecioMayor(Double.parseDouble(txtPrecioM.getText()));
+        reg.setExistencia(Integer.parseInt(txtExistencia.getText()));
         try {
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{Call sp_AgregarProducto(?,?,?,?,?,?,?,?)}");
-            procedimiento.setString(1, registro.getCodigoProducto());
-            procedimiento.setString(2, registro.getDescripcionProducto());
-            procedimiento.setDouble(3, registro.getPrecioUnitario());
-            procedimiento.setDouble(4, registro.getPrecioDocena());
-            procedimiento.setDouble(5, registro.getPrecioMayor());
-            procedimiento.setInt(6, registro.getExistencia());
-            procedimiento.setInt(7, registro.getCodigoTipoProducto());
-            procedimiento.setInt(8, registro.getCodigoProveedor());
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{CALL sp_AgregarProducto(?, ?, ?, ?, ?, ?, ?, ?)}");
+            procedimiento.setString(1, reg.getCodigoProducto());
+            procedimiento.setString(2, reg.getDescripcionProducto());
+            procedimiento.setDouble(3, reg.getPrecioUnitario());
+            procedimiento.setDouble(4, reg.getPrecioDocena());
+            procedimiento.setDouble(5, reg.getPrecioMayor());
+            procedimiento.setInt(6, reg.getExistencia());
+            procedimiento.setInt(7, reg.getCodigoTipoProducto());
+            procedimiento.setInt(8, reg.getCodigoProveedor());
             procedimiento.execute();
-
-            listaProductos.add(registro);
-        } catch (Exception e) {
+            listaProductos.add(reg);
+        } catch (SQLException e) {
             e.printStackTrace();
+            System.err.println("Error al guardar el producto: " + e.getMessage());
         }
     }
 
