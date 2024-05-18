@@ -13,7 +13,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="461.0" prefWidth="671.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dannyrodriguez.controller.MenuProductosController">
    <children>
-      <TableView fx:id="tblProductos" layoutX="41.0" layoutY="144.0" prefHeight="231.0" prefWidth="607.0">
+      <TableView fx:id="tvProductos" layoutX="41.0" layoutY="144.0" prefHeight="231.0" prefWidth="607.0">
         <columns>
           <TableColumn fx:id="colCodProd" prefWidth="75.0" text="codigoProducto" />
           <TableColumn fx:id="colDescProd" prefWidth="75.0" text="descripcionProducto" />
@@ -39,7 +39,7 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="codigoTipoProducto" />
             <ComboBox fx:id="cmbCodigoTipoP" prefWidth="150.0" GridPane.columnIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="codigoProveedor" GridPane.rowIndex="1" />
-            <ComboBox fx:id="cmbCodProv" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cmbCodigoP" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <GridPane layoutX="25.0" layoutY="29.0">

@@ -77,7 +77,26 @@ CREATE TABLE Empleados(
 	PRIMARY KEY PK_codigoEmpleado (codigoEmpleado)
 );
 
+CREATE TABLE EmailProveedor(
+	codigoEmailProveedor INT NOT NULL,
+    emailProveedor VARCHAR (50) NOT NULL,
+    descripcion VARCHAR (100) NOT NULL,
+    codigoProveedor INT NOT NULL,
+	PRIMARY KEY PK_codigoEmailProveedores (codigoEmailProveedor),
+    constraint FK_codigoProveedor foreign key Proveedores(codigoProveedor)
+	references Proveedores(codigoProveedor)
+);
 
+CREATE TABLE TelefonoProveedor(
+	codigoTelefonoProveedor INT NOT NULL,
+    numeroPrincipal VARCHAR (8) NOT NULL,
+    numeroSecundario VARCHAR (8),
+    observaciones VARCHAR (45),
+    codigoProveedor INT NOT NULL,
+	PRIMARY KEY PK_codigoTelefonoProveedor (codigoTelefonoProveedor),
+    constraint FK_codigoTelefonoProveedor foreign key Proveedores(codigoProveedor)
+	references Proveedores(codigoProveedor)
+);
 
 
 ----------------------------------------
