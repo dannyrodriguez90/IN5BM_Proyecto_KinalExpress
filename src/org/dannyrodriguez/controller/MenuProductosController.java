@@ -323,7 +323,7 @@ public class MenuProductosController implements Initializable {
 
     public void actualizar() {
         try {
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_editarProducto(?,?,?,?,?,?,?,?,?)}");
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarProducto(?,?,?,?,?,?,?,?,?)}");
             Productos registro = (Productos) tvProductos.getSelectionModel().getSelectedItem();
             registro.setCodigoProveedor(((Proveedor) cmbCodigoP.getSelectionModel().getSelectedItem()).getCodigoProveedor());
             registro.setCodigoTipoProducto((((TipoDeProducto) cmbCodigoTipoP.getSelectionModel().getSelectedItem()).getCodigoTipoProducto()));
