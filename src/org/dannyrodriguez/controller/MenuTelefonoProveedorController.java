@@ -18,6 +18,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
 import org.dannyrodriguez.bean.TelefonoProveedor;
 import org.dannyrodriguez.bean.Proveedor;
@@ -34,6 +36,14 @@ public class MenuTelefonoProveedorController implements Initializable {
         AGREGAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NULL
     }
     private operaciones tipoDeOperaciones = operaciones.NULL;
+    @FXML
+    private ImageView imgAgregar;
+    @FXML
+    private ImageView imgEliminar;
+    @FXML
+    private ImageView imgEditar;
+    @FXML
+    private ImageView imgReporte;
     @FXML
     private TableView<TelefonoProveedor> tvTelefono;
     @FXML
@@ -143,6 +153,8 @@ public class MenuTelefonoProveedorController implements Initializable {
                 btnEliminar.setText("Cancelar");
                 btnEditar.setDisable(true);
                 btnReporte.setDisable(true);
+                imgAgregar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
+                imgEliminar.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
                 tipoDeOperaciones = operaciones.AGREGAR;
                 break;
             case AGREGAR:
@@ -155,6 +167,8 @@ public class MenuTelefonoProveedorController implements Initializable {
                     btnEliminar.setText("Eliminar");
                     btnEditar.setDisable(false);
                     btnReporte.setDisable(false);
+                    imgAgregar.setImage(new Image("/org/dannyrodriguez/images/agregar-usuario.png"));
+                    imgEliminar.setImage(new Image("/org/dannyrodriguez/images/contenedor-de-basura.png"));
                     tipoDeOperaciones = operaciones.NULL;
                 } catch (NullPointerException e) {
                     e.printStackTrace();
@@ -165,89 +179,89 @@ public class MenuTelefonoProveedorController implements Initializable {
     }
 
     public void guardar() {
-    TelefonoProveedor reg = new TelefonoProveedor();
+        TelefonoProveedor reg = new TelefonoProveedor();
 
-    // Obtener el proveedor seleccionado del ComboBox
-    Proveedor proveedorSeleccionado = cmbCodigoProveedor.getSelectionModel().getSelectedItem();
-    if (proveedorSeleccionado == null) {
-        System.err.println("Error: Debe seleccionar un proveedor válido.");
-        return;
+        // Obtener el proveedor seleccionado del ComboBox
+        Proveedor proveedorSeleccionado = cmbCodigoProveedor.getSelectionModel().getSelectedItem();
+        if (proveedorSeleccionado == null) {
+            System.err.println("Error: Debe seleccionar un proveedor válido.");
+            return;
+        }
+
+        // Configurar los atributos del teléfono con los valores de los campos de texto y los ComboBox
+        reg.setCodigoTelefonoProveedor(Integer.parseInt(txtcodigoTelefonoProveedor.getText())); // Asignar el valor del campo de texto
+        reg.setNumeroPrincipal(txtnumeroPrincipal.getText());
+        reg.setNumeroSecundario(txtnumeroSecundario.getText());
+        reg.setObservaciones(txtobservaciones.getText());
+        reg.setCodigoProveedor(proveedorSeleccionado.getCodigoProveedor());
+
+        try {
+            // Preparar la llamada al procedimiento almacenado para agregar el teléfono
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_AgregarTelefonoProveedor(?, ?, ?, ?, ?)}");
+            procedimiento.setInt(1, reg.getCodigoTelefonoProveedor());
+            procedimiento.setString(2, reg.getNumeroPrincipal());
+            procedimiento.setString(3, reg.getNumeroSecundario());
+            procedimiento.setString(4, reg.getObservaciones());
+            procedimiento.setInt(5, reg.getCodigoProveedor());
+
+            // Ejecutar el procedimiento almacenado
+            procedimiento.execute();
+
+            // Agregar el teléfono a la lista observable
+            listaTelefonoProveedor.add(reg);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error al guardar el teléfono: " + e.getMessage());
+        }
     }
 
-    // Configurar los atributos del teléfono con los valores de los campos de texto y los ComboBox
-    reg.setCodigoTelefonoProveedor(Integer.parseInt(txtcodigoTelefonoProveedor.getText())); // Asignar el valor del campo de texto
-    reg.setNumeroPrincipal(txtnumeroPrincipal.getText());
-    reg.setNumeroSecundario(txtnumeroSecundario.getText());
-    reg.setObservaciones(txtobservaciones.getText());
-    reg.setCodigoProveedor(proveedorSeleccionado.getCodigoProveedor());
-
-    try {
-        // Preparar la llamada al procedimiento almacenado para agregar el teléfono
-        PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_AgregarTelefonoProveedor(?, ?, ?, ?, ?)}");
-        procedimiento.setInt(1, reg.getCodigoTelefonoProveedor());
-        procedimiento.setString(2, reg.getNumeroPrincipal());
-        procedimiento.setString(3, reg.getNumeroSecundario());
-        procedimiento.setString(4, reg.getObservaciones());
-        procedimiento.setInt(5, reg.getCodigoProveedor());
-
-        // Ejecutar el procedimiento almacenado
-        procedimiento.execute();
-
-        // Agregar el teléfono a la lista observable
-        listaTelefonoProveedor.add(reg);
-    } catch (SQLException e) {
-        e.printStackTrace();
-        System.err.println("Error al guardar el teléfono: " + e.getMessage());
+    public void seleccionar() {
+        if (tvTelefono.getSelectionModel().getSelectedItem() != null) {
+            TelefonoProveedor telefonoSeleccionado = tvTelefono.getSelectionModel().getSelectedItem();
+            txtcodigoTelefonoProveedor.setText(String.valueOf(telefonoSeleccionado.getCodigoTelefonoProveedor())); // Corrección aquí
+            txtnumeroPrincipal.setText(telefonoSeleccionado.getNumeroPrincipal());
+            txtnumeroSecundario.setText(telefonoSeleccionado.getNumeroSecundario());
+            txtobservaciones.setText(telefonoSeleccionado.getObservaciones());
+            cmbCodigoProveedor.getSelectionModel().select(buscarProveedor(telefonoSeleccionado.getCodigoProveedor()));
+        }
     }
-}
-
-
-       public void seleccionar() {
-    if (tvTelefono.getSelectionModel().getSelectedItem() != null) {
-        TelefonoProveedor telefonoSeleccionado = tvTelefono.getSelectionModel().getSelectedItem();
-        txtcodigoTelefonoProveedor.setText(String.valueOf(telefonoSeleccionado.getCodigoTelefonoProveedor())); // Corrección aquí
-        txtnumeroPrincipal.setText(telefonoSeleccionado.getNumeroPrincipal());
-        txtnumeroSecundario.setText(telefonoSeleccionado.getNumeroSecundario());
-        txtobservaciones.setText(telefonoSeleccionado.getObservaciones());
-        cmbCodigoProveedor.getSelectionModel().select(buscarProveedor(telefonoSeleccionado.getCodigoProveedor()));
-    }
-}
-
-
 
     public void editar() {
-    switch (tipoDeOperaciones) {
-        case NULL:
-            if (tvTelefono.getSelectionModel().getSelectedItem() != null) {
-                TelefonoProveedor telefonoSeleccionado = tvTelefono.getSelectionModel().getSelectedItem();
-                txtcodigoTelefonoProveedor.setText(String.valueOf(telefonoSeleccionado.getCodigoTelefonoProveedor())); // Corrección aquí
-                txtnumeroPrincipal.setText(telefonoSeleccionado.getNumeroPrincipal());
-                txtnumeroSecundario.setText(telefonoSeleccionado.getNumeroSecundario());
-                txtobservaciones.setText(telefonoSeleccionado.getObservaciones());
-                cmbCodigoProveedor.getSelectionModel().select(buscarProveedor(telefonoSeleccionado.getCodigoProveedor()));
-                btnEditar.setText("Actualizar");
-                btnReporte.setText("Cancelar");
-                btnAgregar.setDisable(true);
-                btnEliminar.setDisable(true);
-                activarControles();
-                tipoDeOperaciones = operaciones.ACTUALIZAR;
-            } else {
-                System.out.println("Debe seleccionar un elemento.");
-            }
-            break;
-        case ACTUALIZAR:
-            actualizar();
-            btnEditar.setText("Editar");
-            btnReporte.setText("Reportes");
-            btnAgregar.setDisable(false);
-            btnEliminar.setDisable(false);
-            desactivarControles();
-            cargarDatos();
-            limpiarControles();
-            tipoDeOperaciones = operaciones.NULL;
-            break;
+        switch (tipoDeOperaciones) {
+            case NULL:
+                if (tvTelefono.getSelectionModel().getSelectedItem() != null) {
+                    TelefonoProveedor telefonoSeleccionado = tvTelefono.getSelectionModel().getSelectedItem();
+                    txtcodigoTelefonoProveedor.setText(String.valueOf(telefonoSeleccionado.getCodigoTelefonoProveedor())); // Corrección aquí
+                    txtnumeroPrincipal.setText(telefonoSeleccionado.getNumeroPrincipal());
+                    txtnumeroSecundario.setText(telefonoSeleccionado.getNumeroSecundario());
+                    txtobservaciones.setText(telefonoSeleccionado.getObservaciones());
+                    cmbCodigoProveedor.getSelectionModel().select(buscarProveedor(telefonoSeleccionado.getCodigoProveedor()));
+                    btnEditar.setText("Actualizar");
+                    btnReporte.setText("Cancelar");
+                    btnAgregar.setDisable(true);
+                    btnEliminar.setDisable(true);
+                    imgEditar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
+                    imgReporte.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
+                    activarControles();
+                    tipoDeOperaciones = operaciones.ACTUALIZAR;
+                } else {
+                    System.out.println("Debe seleccionar un elemento.");
+                }
+                break;
+            case ACTUALIZAR:
+                actualizar();
+                btnEditar.setText("Editar");
+                btnReporte.setText("Reportes");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                desactivarControles();
+                cargarDatos();
+                limpiarControles();
+                tipoDeOperaciones = operaciones.NULL;
+                break;
+        }
     }
-}
+
     public void actualizar() {
         TelefonoProveedor telefonoSeleccionado = tvTelefono.getSelectionModel().getSelectedItem();
         telefonoSeleccionado.setNumeroPrincipal(txtcodigoTelefonoProveedor.getText());
@@ -278,6 +292,8 @@ public class MenuTelefonoProveedorController implements Initializable {
             btnEliminar.setText("Eliminar");
             btnEditar.setDisable(false);
             btnReporte.setDisable(false);
+            imgAgregar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
+            imgEliminar.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
             tipoDeOperaciones = operaciones.NULL;
         } else {
             if (tvTelefono.getSelectionModel().getSelectedItem() != null) {
