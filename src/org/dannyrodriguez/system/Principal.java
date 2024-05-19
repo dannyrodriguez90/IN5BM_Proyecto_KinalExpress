@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import org.dannyrodriguez.controller.MenuCargoEmpleadoController;
 import org.dannyrodriguez.controller.MenuClientesController;
 import org.dannyrodriguez.controller.MenuComprasController;
+import org.dannyrodriguez.controller.MenuEmailProveedorController;
 import org.dannyrodriguez.controller.MenuPrincipalController;
 import org.dannyrodriguez.controller.MenuProductosController;
 import org.dannyrodriguez.controller.MenuProgramadorController;
@@ -126,9 +127,19 @@ public void menuPrincipalView (){
             System.out.println(e.getMessage()); 
         }
     }
+      
+     public void menuEmailProveedorView (){
+    try{
+        MenuEmailProveedorController menuEmailProveedorView = (MenuEmailProveedorController)cambiarEscena
+        ("MenuEmailProveedorView.fxml",625,440 );
+        menuEmailProveedorView.setEscenarioPrincipal(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage()); 
+        }
+    }
     
     
-    
+
     
     
     public static void main(String[] args) {

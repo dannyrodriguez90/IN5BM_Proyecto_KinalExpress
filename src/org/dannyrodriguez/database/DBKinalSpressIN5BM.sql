@@ -570,7 +570,7 @@ Delimiter $$
 		End $$
 Delimiter ; 
 
-CALL sp_eliminarCargoEmpleado(6);
+-- CALL sp_eliminarCargoEmpleado(6);
 
 ---------------------------------------------------------
 
@@ -699,16 +699,7 @@ DELIMITER $$
 
 CREATE PROCEDURE sp_ListarEmpleado()
 BEGIN
-    SELECT
-        E.codigoEmpleado,
-        E.nombresEmpleado,
-        E.apellidosEmpleado,
-        E.sueldo,
-        E.direccion,
-        E.turno,
-        E.codigoCargoEmpleado
-    FROM
-        Empleados E;
+    SELECT * FROM Empleados;
 END $$
 
 DELIMITER ;
@@ -733,11 +724,12 @@ BEGIN
         codigoEmpleado = codigoEmpleado;
 END $$
 DELIMITER ;
+ call sp_buscarEmpleado(1);
 
 
 DELIMITER $$
 
-CREATE PROCEDURE sp_editarEmpleado (
+CREATE PROCEDURE sp_actualizarEmpleado (
     IN codigoEmpleado INT,
     IN nombresEmpleado VARCHAR(50),
     IN apellidosEmpleado VARCHAR(50),
@@ -759,7 +751,7 @@ BEGIN
 END $$
 
 DELIMITER ;
-CALL sp_editarEmpleado(1,'Juanito', 'Pérez',20.00,'123 Main Street','Nocturno',1);
+CALL sp_actualizarEmpleado(1,'Juanito', 'Pérez',20.00,'123 Main Street','Nocturno',1);
 
 DELIMITER $$
 
@@ -769,3 +761,89 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+------------------------------------------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_AgregarEmailProveedor (
+    IN codigoEmailProveedor INT,
+    IN emailProveedor VARCHAR(50),
+    IN descripcion VARCHAR(100),
+    IN codigoProveedor INT
+)
+BEGIN
+    INSERT INTO EmailProveedor(codigoEmailProveedor, emailProveedor, descripcion, codigoProveedor)
+    VALUES (codigoEmailProveedor, emailProveedor, descripcion, codigoProveedor);
+END $$
+
+DELIMITER ;
+
+CALL sp_AgregarEmailProveedor(1, 'proveedor1@example.com', 'Email principal', 1);
+CALL sp_AgregarEmailProveedor(2, 'proveedor2@example.com', 'Email secundario', 2);
+CALL sp_AgregarEmailProveedor(3, 'proveedor3@example.com', 'Correo de contacto', 3);
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_ListarEmailProveedor()
+BEGIN
+    SELECT * FROM EmailProveedor;
+END $$
+
+DELIMITER ;
+
+CALL sp_ListarEmailProveedor();
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_buscarEmailProveedor(IN codigoEmailProveedor INT)
+BEGIN
+    SELECT
+        codigoEmailProveedor,
+        emailProveedor,
+        descripcion,
+        codigoProveedor
+    FROM
+        EmailProveedor
+    WHERE
+        codigoEmailProveedor = codigoEmailProveedor;
+END $$
+
+DELIMITER ;
+
+CALL sp_buscarEmailProveedor(1);
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_ActualizarEmailProveedor (
+    IN codigoEmailProveedor INT,
+    IN emailProveedor VARCHAR(50),
+    IN descripcion VARCHAR(100),
+    IN codigoProveedor INT
+)
+BEGIN
+    UPDATE EmailProveedor SET
+        EmailProveedor.emailProveedor = emailProveedor,
+        EmailProveedor.descripcion = descripcion,
+        EmailProveedor.codigoProveedor = codigoProveedor
+    WHERE
+        EmailProveedor.codigoEmailProveedor = codigoEmailProveedor;
+END $$
+
+DELIMITER ;
+
+CALL sp_ActualizarEmailProveedor(1, 'nuevo_email@example.com', 'Actualizado', 1);
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_EliminarEmailProveedor (IN codigoEmailProveedor INT)
+BEGIN
+    DELETE FROM EmailProveedor
+    WHERE codigoEmailProveedor = codigoEmailProveedor;
+END $$
+
+DELIMITER ;
+
+
+
+
