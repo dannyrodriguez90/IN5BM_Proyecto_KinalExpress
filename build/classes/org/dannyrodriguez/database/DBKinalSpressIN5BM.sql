@@ -234,6 +234,10 @@ CALL sp_AgregarProveedor(5, '1357924680', 'Carlos', 'López', '789 Elm Street', 
 CALL sp_AgregarProveedor(6, '2468013579', 'Laura', 'Martínez', '321 Pine Street', 'Empresa D', 'Laura Martínez', 'www.empresaD.com');
 CALL sp_AgregarProveedor(7, '9876543210', 'Ana', 'Sánchez', '654 Cedar Avenue', 'Empresa E', 'Ana Sánchez', 'www.empresaE.com');
 
+
+
+
+
 DELIMITER $$
 
 CREATE PROCEDURE sp_ListarProveedor()
@@ -594,22 +598,11 @@ CALL sp_AgregarProducto('3', 'Zapatos', 50.00, 55.00, 12.00, 50, 4, 4);
 CALL sp_AgregarProducto('4', 'Corbata', 15.25, 16.00, 35.00, 120, 1, 1);
 
 
-
 DELIMITER $$
 CREATE PROCEDURE sp_ListarProducto()
 BEGIN
-    SELECT
-        P.codigoProducto,
-        P.descripcionProducto,
-        P.precioUnitario,
-        P.precioDocena,
-        P.precioMayor,
-        P.existencia,
-        P.codigoProveedor,
-        P.codigoTipoProducto
-    FROM
-        Productos P;
-END $$
+    SELECT * FROM Productos;
+END$$
 DELIMITER ;
 
 CALL sp_ListarProducto();
@@ -638,7 +631,7 @@ call sp_buscarProducto(1);
 
 
 DELIMITER $$
-CREATE PROCEDURE sp_editarProducto (
+CREATE PROCEDURE sp_actualizarProducto (
     IN codigoProducto VARCHAR (45),
     IN descripcionProducto VARCHAR(45),
     IN precioUnitario DECIMAL(10,2),
@@ -661,7 +654,7 @@ BEGIN
         Productos.codigoProducto = codigoProducto;
 END $$
 DELIMITER ;
-CALL sp_editarProducto('5', 'Camisa', 25.50, 28.00, 60.00, 100, 1, 1);
+CALL sp_actualizarProducto('5', 'Camisa', 25.50, 28.00, 60.00, 100, 1, 1);
 
 
 
@@ -672,8 +665,7 @@ Delimiter $$
 				where codigoProducto = ProductoID;
 		End $$
 Delimiter ; 
-
-CALL sp_eliminarProducto('6');
+-- CALL sp_eliminarProducto('6');
 
 
 

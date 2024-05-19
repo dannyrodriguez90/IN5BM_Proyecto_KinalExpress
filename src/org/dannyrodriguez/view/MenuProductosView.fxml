@@ -5,15 +5,23 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="461.0" prefWidth="671.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dannyrodriguez.controller.MenuProductosController">
+<AnchorPane id="AnchorPane" prefHeight="462.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dannyrodriguez.controller.MenuProductosController">
    <children>
-      <TableView fx:id="tvProductos" layoutX="41.0" layoutY="144.0" prefHeight="231.0" prefWidth="607.0">
+      <ImageView fitHeight="473.0" fitWidth="707.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Productos%20.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tvProductos" layoutX="25.0" layoutY="151.0" prefHeight="231.0" prefWidth="607.0" stylesheets="@../resource/KinalExpresCSS.css">
         <columns>
           <TableColumn fx:id="colCodProd" prefWidth="75.0" text="codigoProducto" />
           <TableColumn fx:id="colDescProd" prefWidth="75.0" text="descripcionProducto" />
@@ -24,6 +32,9 @@
             <TableColumn fx:id="colCodTipoProd" prefWidth="75.0" text="codigoTipoProducto" />
             <TableColumn fx:id="colCodProv" prefWidth="75.0" text="codigoProveedor" />
         </columns>
+         <effect>
+            <DropShadow />
+         </effect>
       </TableView>
       <GridPane layoutX="457.0" layoutY="38.0">
         <columnConstraints>
@@ -36,10 +47,16 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="codigoTipoProducto" />
-            <ComboBox fx:id="cmbCodigoTipoP" prefWidth="150.0" GridPane.columnIndex="1" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="codigoProveedor" GridPane.rowIndex="1" />
-            <ComboBox fx:id="cmbCodigoP" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CodigoTipoProducto">
+               <effect>
+                  <DropShadow />
+               </effect></Text>
+            <ComboBox fx:id="cmbCodigoTipoProducto" prefWidth="150.0" GridPane.columnIndex="1" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CodigoProveedor" GridPane.rowIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect></Text>
+            <ComboBox fx:id="cmbCodigoProveedor" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <GridPane layoutX="25.0" layoutY="29.0">
@@ -53,9 +70,18 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="codigoProducto" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="descripcion" GridPane.rowIndex="1" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="precioUnitario" GridPane.rowIndex="2" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CodigoProducto" wrappingWidth="93.06640625">
+               <effect>
+                  <DropShadow />
+               </effect></Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Descripcion" GridPane.rowIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect></Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PrecioUnitario" wrappingWidth="86.87109375" GridPane.rowIndex="2">
+               <effect>
+                  <DropShadow />
+               </effect></Text>
             <TextField fx:id="txtCodigoProd" GridPane.columnIndex="1" />
             <TextField fx:id="txtDescPro" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="txtPrecioU" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -72,9 +98,18 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="precioDocena" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="precioMayor" GridPane.rowIndex="1" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="existencia" GridPane.rowIndex="2" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PrecioDocena">
+               <effect>
+                  <DropShadow />
+               </effect></Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PrecioMayor" GridPane.rowIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect></Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Existencia" GridPane.rowIndex="2">
+               <effect>
+                  <DropShadow />
+               </effect></Text>
             <TextField fx:id="txtPrecioD" GridPane.columnIndex="1" />
             <TextField fx:id="txtPrecioM" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="txtExistencia" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -92,11 +127,26 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregar" prefHeight="56.0" prefWidth="135.0" text="Agregar" />
-            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="57.0" prefWidth="121.0" text="Editar" GridPane.columnIndex="1" />
-            <Button fx:id="brnEliminar" mnemonicParsing="false" onAction="#eliminar" prefHeight="59.0" prefWidth="150.0" text="Eliminar" GridPane.columnIndex="2" />
-            <Button fx:id="btnReporte" mnemonicParsing="false" prefHeight="65.0" prefWidth="168.0" text="Reporteria" GridPane.columnIndex="3" />
-            <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="87.0" prefWidth="203.0" text="Regresar" GridPane.columnIndex="4" />
+            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregar" prefHeight="56.0" prefWidth="135.0" text="Agregar">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="57.0" prefWidth="121.0" text="Editar" GridPane.columnIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" prefHeight="66.0" prefWidth="116.0" text="Eliminar" GridPane.columnIndex="2">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Button fx:id="btnReporte" mnemonicParsing="false" prefHeight="65.0" prefWidth="168.0" text="Reporteria" GridPane.columnIndex="3">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="87.0" prefWidth="203.0" text="Regresar" GridPane.columnIndex="4">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
          </children>
       </GridPane>
    </children>
