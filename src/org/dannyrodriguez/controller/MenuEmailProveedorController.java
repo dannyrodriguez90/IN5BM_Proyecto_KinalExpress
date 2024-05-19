@@ -118,31 +118,39 @@ public class MenuEmailProveedorController implements Initializable {
 
     public void guardar() {
     EmailProveedor reg = new EmailProveedor();
-    Object proveedorSeleccionadoObj = cmbCodigoProveedor.getSelectionModel().getSelectedItem();
-    if (proveedorSeleccionadoObj instanceof Proveedor) {
-        Proveedor proveedorSeleccionado = (Proveedor) proveedorSeleccionadoObj;
-        reg.setCodigoProveedor(proveedorSeleccionado.getCodigoProveedor());
-    } else {
+
+    // Obtener el proveedor seleccionado del ComboBox
+    Proveedor proveedorSeleccionado = cmbCodigoProveedor.getSelectionModel().getSelectedItem();
+    if (proveedorSeleccionado == null) {
         System.err.println("Error: Debe seleccionar un proveedor válido.");
         return;
     }
+    
+    // Configurar los atributos del email del proveedor con los valores de los campos de texto y el ComboBox
     reg.setCodigoEmailProveedor(Integer.parseInt(txtCoEmailPro.getText()));
     reg.setEmailProveedor(txtEmailProveedores.getText());
     reg.setDescripcion(txtDescripcion.getText());
+    reg.setCodigoProveedor(proveedorSeleccionado.getCodigoProveedor());
     
     try {
+        // Preparar la llamada al procedimiento almacenado para agregar el email del proveedor
         PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_AgregarEmailProveedor(?, ?, ?, ?)}");
         procedimiento.setInt(1, reg.getCodigoEmailProveedor());
         procedimiento.setString(2, reg.getEmailProveedor());
         procedimiento.setString(3, reg.getDescripcion());
         procedimiento.setInt(4, reg.getCodigoProveedor());
+        
+        // Ejecutar el procedimiento almacenado
         procedimiento.execute();
+        
+        // Agregar el email del proveedor a la lista observable
         listaEmail.add(reg);
     } catch (SQLException e) {
         e.printStackTrace();
         System.err.println("Error al guardar el email del proveedor: " + e.getMessage());
     }
 }
+
 
 
     public ObservableList<EmailProveedor> getEmailProveedor() {
@@ -234,17 +242,7 @@ public class MenuEmailProveedorController implements Initializable {
         emailProveedorSeleccionado.setCodigoEmailProveedor(Integer.parseInt(txtCoEmailPro.getText()));
         emailProveedorSeleccionado.setEmailProveedor(txtEmailProveedores.getText());
         emailProveedorSeleccionado.setDescripcion(txtDescripcion.getText());
-
-        // Verificar y asignar el proveedor seleccionado
-        Proveedor proveedorSeleccionado = cmbCodigoProveedor.getValue();
-        if (proveedorSeleccionado != null) {
-            emailProveedorSeleccionado.setCodigoProveedor(proveedorSeleccionado.getCodigoProveedor());
-        } else {
-            System.err.println("Error: Debe seleccionar un proveedor válido.");
-            return;
-        }
-
-        // Intentar ejecutar el procedimiento almacenado
+        
         try {
             PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{CALL sp_actualizarEmailProveedor(?, ?, ?, ?)}");
             procedimiento.setInt(1, emailProveedorSeleccionado.getCodigoEmailProveedor());
@@ -254,12 +252,12 @@ public class MenuEmailProveedorController implements Initializable {
             procedimiento.execute();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println("Error al actualizar el email del proveedor: " + e.getMessage());
         }
     } else {
         System.err.println("Error: Debe seleccionar un email del proveedor.");
     }
 }
+
 
 
 

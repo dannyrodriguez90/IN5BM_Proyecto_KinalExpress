@@ -844,6 +844,90 @@ END $$
 
 DELIMITER ;
 
+-----------------------------------------------------------------
+DELIMITER $$
+
+CREATE PROCEDURE sp_AgregarTelefonoProveedor (
+    IN codigoTelefonoProveedor INT,
+    IN numeroPrincipal VARCHAR(8),
+    IN numeroSecundario VARCHAR(8),
+    IN observaciones VARCHAR(45),
+    IN codigoProveedor INT
+)
+BEGIN
+    INSERT INTO TelefonoProveedor(codigoTelefonoProveedor, numeroPrincipal, numeroSecundario, observaciones, codigoProveedor)
+    VALUES (codigoTelefonoProveedor, numeroPrincipal, numeroSecundario, observaciones, codigoProveedor);
+END $$
+
+DELIMITER ;
+
+CALL sp_AgregarTelefonoProveedor(1, '12345678', '87654321', 'Teléfono principal', 1);
+CALL sp_AgregarTelefonoProveedor(2, '98765432', '23456789', 'Teléfono secundario', 2);
+CALL sp_AgregarTelefonoProveedor(3, '11223344', '55667788', 'Teléfono de contacto', 3);
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_ListarTelefonoProveedor()
+BEGIN
+    SELECT * FROM TelefonoProveedor;
+END $$
+
+DELIMITER ;
+
+CALL sp_ListarTelefonoProveedor();
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_buscarTelefonoProveedor(IN codigoTelefonoProveedor INT)
+BEGIN
+    SELECT
+        codigoTelefonoProveedor,
+        numeroPrincipal,
+        numeroSecundario,
+        observaciones,
+        codigoProveedor
+    FROM
+        TelefonoProveedor
+    WHERE
+        codigoTelefonoProveedor = codigoTelefonoProveedor;
+END $$
+
+DELIMITER ;
+
+CALL sp_buscarTelefonoProveedor(1);
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_ActualizarTelefonoProveedor (
+    IN codigoTelefonoProveedor INT,
+    IN numeroPrincipal VARCHAR(8),
+    IN numeroSecundario VARCHAR(8),
+    IN observaciones VARCHAR(45),
+    IN codigoProveedor INT
+)
+BEGIN
+    UPDATE TelefonoProveedor SET
+        TelefonoProveedor.numeroPrincipal = numeroPrincipal,
+        TelefonoProveedor.numeroSecundario = numeroSecundario,
+        TelefonoProveedor.observaciones = observaciones,
+        TelefonoProveedor.codigoProveedor = codigoProveedor
+    WHERE
+        TelefonoProveedor.codigoTelefonoProveedor = codigoTelefonoProveedor;
+END $$
+
+DELIMITER ;
+
+CALL sp_ActualizarTelefonoProveedor(1, '11112222', '33334444', 'Actualizado', 1);
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_EliminarTelefonoProveedor (IN codigoTelefonoProveedor INT)
+BEGIN
+    DELETE FROM TelefonoProveedor
+    WHERE codigoTelefonoProveedor = codigoTelefonoProveedor;
+END $$
+
+DELIMITER ;
 
 
 

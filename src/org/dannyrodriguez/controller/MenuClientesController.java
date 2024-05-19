@@ -136,8 +136,7 @@ public class MenuClientesController implements Initializable {
                 break;
             default:
                 if (tblClientes.getSelectionModel().getSelectedItem() != null) {
-                    int respuesta = JOptionPane.showConfirmDialog(null, "Confirmar la eliminación del registro",
-                            "Eliminar Cliente", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int respuesta = JOptionPane.showConfirmDialog(null, "Confirmar la eliminación del registro", "Eliminar Cliente", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (respuesta == JOptionPane.YES_NO_OPTION) {
                         try {
                             PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_eliminarClientes(?)}");
