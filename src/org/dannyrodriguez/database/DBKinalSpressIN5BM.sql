@@ -1207,5 +1207,55 @@ CREATE PROCEDURE sp_EliminarDetalleFactura (
 BEGIN
     DELETE FROM DetalleFactura WHERE codigoDetalleFactura = p_codigoDetalleFactura;
 END $$
+DELIMITER ;
 
+-- Trigger to calculate totalDocumento in Compras table
+DELIMITER //
+CREATE TRIGGER trg_calculate_total_documento
+AFTER INSERT ON DetalleCompra
+FOR EACH ROW
+BEGIN
+    DECLARE total DECIMAL(10,2);
+    SET total = (SELECT SUM(costoUnitario * cantidad) FROM DetalleCompra WHERE numeroDocumento = NEW.numeroDocumento);
+    UPDATE Compras SET totalDocumento = total WHERE numeroDocumento = NEW.numeroDocumento;
+END;
+//
+DELIMITER ;
+
+-- Trigger to update precios in Productos table after insert on DetalleCompra
+DELIMITER //
+CREATE TRIGGER trg_update_precios_after_insert
+AFTER INSERT ON DetalleCompra
+FOR EACH ROW
+BEGIN
+    DECLARE unitario DECIMAL(10,2);
+    DECLARE docena DECIMAL(10,2);
+    DECLARE mayor DECIMAL(10,2);
+    
+    SET unitario = NEW.costoUnitario * 1.40;
+    SET docena = NEW.costoUnitario * 12 * 1.35;
+    SET mayor = NEW.costoUnitario * 24 * 1.25;
+    
+    UPDATE Productos SET precioUnitario = unitario, precioDocena = docena, precioMayor = mayor WHERE codigoProducto = NEW.codigoProducto;
+END;
+//
+DELIMITER ;
+
+-- Trigger to update precios in Productos table after update on DetalleCompra
+DELIMITER //
+CREATE TRIGGER trg_update_precios_after_update
+AFTER UPDATE ON DetalleCompra
+FOR EACH ROW
+BEGIN
+    DECLARE unitario DECIMAL(10,2);
+    DECLARE docena DECIMAL(10,2);
+    DECLARE mayor DECIMAL(10,2);
+    
+    SET unitario = NEW.costoUnitario * 1.40;
+    SET docena = NEW.costoUnitario * 12 * 1.35;
+    SET mayor = NEW.costoUnitario * 24 * 1.25;
+    
+    UPDATE Productos SET precioUnitario = unitario, precioDocena = docena, precioMayor = mayor WHERE codigoProducto = NEW.codigoProducto;
+END;
+//
 DELIMITER ;
