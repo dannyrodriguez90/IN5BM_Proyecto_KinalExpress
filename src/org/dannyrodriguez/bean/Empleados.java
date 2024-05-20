@@ -79,5 +79,11 @@ public class Empleados {
     public void setCodigoCargoEmpleado(int codigoCargoEmpleado) {
         this.codigoCargoEmpleado = codigoCargoEmpleado;
     }
+    
+    
+    @Override
+    public String toString() {
+        return getNombresEmpleado()+ " | " + getTurno();
+    }
 
 }

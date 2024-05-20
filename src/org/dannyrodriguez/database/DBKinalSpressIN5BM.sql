@@ -48,7 +48,6 @@ CREATE TABLE CargoEmpleado (
 );
 
 
-
 CREATE TABLE Productos(
 	codigoProducto VARCHAR (45),
     descripcionProducto VARCHAR (45),
@@ -98,9 +97,45 @@ CREATE TABLE TelefonoProveedor(
 	references Proveedores(codigoProveedor)
 );
 
+CREATE TABLE DetalleCompra(
+	codigoDetalleCompra INT NOT NULL,
+    costoUnitario DECIMAL (10,2) NOT NULL,
+    cantidad INT NOT NULL,
+    codigoProducto VARCHAR (45),
+    numeroDocumento INT,
+    constraint FK_codigoProducto foreign key Productos (codigoProducto)
+	references Productos(codigoProducto),
+    constraint FK_numeroDocumento foreign key Compras(numeroDocumento)
+	references Compras(numeroDocumento),
+	PRIMARY KEY PK_codigoDetalleCompra (codigoDetalleCompra)
+);
 
-----------------------------------------
+CREATE TABLE Factura(
+	numeroFactura INT NOT NULL,
+    estado VARCHAR (50) NOT NULL,
+    totalFactura DECIMAL (10,2) NOT NULL,
+    fechaFactura VARCHAR (45) NOT NULL,
+    clienteId INT NOT NULL,
+    codigoEmpleado INT NOT NULL,
+	constraint FK_codigoCliente foreign key Clientes (clienteId)
+	references Clientes(clienteId),
+    constraint FK_codigoEmpleado foreign key Empleados(codigoEmpleado)
+	references Empleados(codigoEmpleado),
+	PRIMARY KEY PK_numeroFactura (numeroFactura)
+);
 
+CREATE TABLE DetalleFactura (
+    codigoDetalleFactura INT NOT NULL,
+    precioUnitario DECIMAL(10,2),
+    cantidad INT NOT NULL,
+    numeroFactura INT NOT NULL,
+    codigoProducto VARCHAR(45) NOT NULL,
+    CONSTRAINT FK_numeroFactura FOREIGN KEY Factura (numeroFactura)
+	REFERENCES Factura (numeroFactura),
+    CONSTRAINT FK_codigoProducto_DetalleFactura FOREIGN KEY Productos (codigoProducto)
+	REFERENCES Productos (codigoProducto),
+    PRIMARY KEY (codigoDetalleFactura)
+);
 
 ------------------------------------------------------------
 DELIMITER $$
@@ -203,7 +238,6 @@ Delimiter $$
 		End $$
 Delimiter ;
 
-call sp_EliminarClientes(3);
 
 -------------------------------------------------------------
 
@@ -401,7 +435,6 @@ CALL sp_eliminarTipoDeProducto(5);
 --------------------------------------------------------------------------------
 
 DELIMITER $$
-
 CREATE PROCEDURE sp_AgregarCompras (
     IN numeroDocumento INT,
     IN fechaDocumento DATE,
@@ -412,7 +445,6 @@ BEGIN
     INSERT INTO Compras (numeroDocumento, fechaDocumento, descripcion, totalDocumento)
     VALUES (numeroDocumento, fechaDocumento, descripcion, totalDocumento);
 END $$
-
 DELIMITER ;
 
 CALL sp_AgregarCompras(1, '2007-09-23', 'biiig', 100.00);
@@ -421,20 +453,14 @@ CALL sp_AgregarCompras(3, '2024-05-01', 'Suministros de oficina', 250.75);
 CALL sp_AgregarCompras(4, '2024-04-15', 'Material de construcción', 1200.00);
 CALL sp_AgregarCompras(5, '2024-05-05', 'Equipamiento informático', 1800.50);
 
-DELIMITER $$
 
+DELIMITER $$
 CREATE PROCEDURE sp_ListarCompras()
 BEGIN
-    SELECT
-        C.numeroDocumento,
-        C.fechaDocumento,
-        C.descripcion,
-        C.totalDocumento
-    FROM
-        Compras C;
-END $$
-
+    SELECT * FROM Compras;
+END$$
 DELIMITER ;
+
 
 CALL sp_ListarCompras();
 
@@ -455,9 +481,7 @@ DELIMITER ;
 
 
 
-
 DELIMITER $$
-
 CREATE PROCEDURE sp_editarCompras (
     IN numeroDocumento INT,
     IN fechaDocumento DATE,
@@ -472,13 +496,11 @@ BEGIN
     WHERE
         Compras.numeroDocumento = numeroDocumento;
 END $$
-
 DELIMITER ;
 
 CALL sp_editarCompras(4,'2008-04-23','oooop', 58.00);
 
 
-DELIMITER $$
 
 Delimiter $$
 	Create procedure sp_eliminarCompras (in compraID int)
@@ -492,7 +514,6 @@ CALL sp_eliminarCompras(6);
 
 -----------------------------------------------------------------------------------
 DELIMITER $$
-
 CREATE PROCEDURE sp_AgregarCargoEmpleado (
     IN codigoCargoEmpleado INT,
     IN nombreCargo VARCHAR(45),
@@ -502,7 +523,6 @@ BEGIN
     INSERT INTO CargoEmpleado(codigoCargoEmpleado, nombreCargo, descripcionCargo)
     VALUES (codigoCargoEmpleado, nombreCargo, descripcionCargo);
 END $$
-
 DELIMITER ;
 
 CALL sp_AgregarCargoEmpleado(1, 'Danny', 'este empleado es la cabra');
@@ -512,7 +532,6 @@ CALL sp_AgregarCargoEmpleado(4, 'Técnico de Soporte', 'Brinda asistencia técni
 CALL sp_AgregarCargoEmpleado(5, 'Diseñador Gráfico', 'Crea diseños gráficos para publicidad, sitios web y materiales de marketing.');
 
 DELIMITER $$
-
 CREATE PROCEDURE sp_ListarCargoEmpleado()
 BEGIN
     SELECT
@@ -665,7 +684,7 @@ Delimiter $$
 				where codigoProducto = ProductoID;
 		End $$
 Delimiter ; 
--- CALL sp_eliminarProducto('6');
+
 
 
 
@@ -755,9 +774,10 @@ CALL sp_actualizarEmpleado(1,'Juanito', 'Pérez',20.00,'123 Main Street','Noctur
 
 DELIMITER $$
 
-CREATE PROCEDURE sp_eliminarEmpleado (codigoEmpleado INT)
+CREATE PROCEDURE sp_eliminarEmpleado ( CodigoEmpleadoID INT)
 BEGIN
-    DELETE FROM Empleados WHERE codigoEmpleado = codigoEmpleado;
+    DELETE FROM Empleados 
+    WHERE codigoEmpleado = CodigoEmpleadoID;
 END $$
 
 DELIMITER ;
@@ -836,10 +856,10 @@ CALL sp_ActualizarEmailProveedor(1, 'nuevo_email@example.com', 'Actualizado', 1)
 
 DELIMITER $$
 
-CREATE PROCEDURE sp_EliminarEmailProveedor (IN CodigoEmailProveedor INT)
+CREATE PROCEDURE sp_EliminarEmailProveedor (IN EmailProveedorID INT)
 BEGIN
     DELETE FROM EmailProveedor
-    WHERE codigoEmailProveedor = CodigoEmailProveedor;
+    WHERE codigoEmailProveedor = EmailProveedorID;
 END $$
 
 DELIMITER ;
@@ -921,13 +941,271 @@ CALL sp_ActualizarTelefonoProveedor(1, '11112222', '33334444', 'Actualizado', 1)
 
 DELIMITER $$
 
-CREATE PROCEDURE sp_EliminarTelefonoProveedor (IN codigoTelefonoProveedor INT)
+CREATE PROCEDURE sp_EliminarTelefonoProveedor (IN CodigoTelefonoProveedorID INT)
 BEGIN
     DELETE FROM TelefonoProveedor
-    WHERE codigoTelefonoProveedor = codigoTelefonoProveedor;
+    WHERE codigoTelefonoProveedor = CodigoTelefonoProveedorID;
+END $$
+
+DELIMITER ;
+-------------------------------------------------
+DELIMITER $$
+CREATE PROCEDURE sp_AgregarDetalleCompra (
+    IN codigoDetalleCompra INT,
+    IN costoUnitario DECIMAL(10,2),
+    IN cantidad INT,
+    IN codigoProducto VARCHAR(45),
+    IN numeroDocumento INT
+)
+BEGIN
+    INSERT INTO DetalleCompra (codigoDetalleCompra, costoUnitario, cantidad, codigoProducto, numeroDocumento)
+    VALUES (codigoDetalleCompra, costoUnitario, cantidad, codigoProducto, numeroDocumento);
+END $$
+
+DELIMITER ;
+CALL sp_AgregarDetalleCompra(1, 20.00, 2, '1', 1);
+CALL sp_AgregarDetalleCompra(2, 30.00, 1, '2', 2);
+CALL sp_AgregarDetalleCompra(3, 40.00, 3, '3', 3);
+CALL sp_AgregarDetalleCompra(4, 15.00, 2, '4', 4);
+
+DELIMITER $$
+CREATE PROCEDURE sp_ListarDetallesCompra()
+BEGIN
+    SELECT * FROM DetalleCompra;
+END $$
+
+DELIMITER ;
+
+CALL sp_ListarDetallesCompra();
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_buscarDetalleCompra(IN codigoDetalleCompra INT)
+BEGIN
+    SELECT
+        codigoDetalleCompra,
+        costoUnitario,
+        cantidad,
+        codigoProducto,
+        numeroDocumento
+    FROM
+        DetalleCompra
+    WHERE
+        codigoDetalleCompra = codigoDetalleCompra;
+END $$
+
+DELIMITER ;
+
+CALL sp_buscarDetalleCompra(1);
+
+
+DELIMITER $$
+CREATE PROCEDURE sp_ActualizarDetalleCompra (
+    IN codigoDetalleCompra INT,
+    IN costoUnitario DECIMAL(10,2),
+    IN cantidad INT,
+    IN codigoProducto VARCHAR(45),
+    IN numeroDocumento INT
+)
+BEGIN
+    UPDATE DetalleCompra SET 
+		DetalleCompra.costoUnitario = costoUnitario,
+        DetalleCompra.cantidad = cantidad,
+        DetalleCompra.codigoProducto = codigoProducto,
+        DetalleCompra.numeroDocumento = numeroDocumento
+    WHERE DetalleCompra.codigoDetalleCompra = codigoDetalleCompra;
+END $$
+DELIMITER ;
+
+CALL sp_ActualizarDetalleCompra(4, 95.00, 2, '4', 4);
+
+DELIMITER $$
+CREATE PROCEDURE sp_EliminarDetalleCompra (IN p_codigoDetalleCompra INT)
+BEGIN
+    DELETE FROM DetalleCompra 
+    WHERE codigoDetalleCompra = p_codigoDetalleCompra;
+END $$
+
+DELIMITER ;
+
+---------------------------------------------------------------------
+DELIMITER $$
+
+CREATE PROCEDURE sp_AgregarFactura (
+    IN numeroFactura INT,
+    IN estado VARCHAR(50),
+    IN totalFactura DECIMAL(10,2),
+    IN fechaFactura VARCHAR(45),
+    IN clienteId INT,
+    IN codigoEmpleado INT
+)
+BEGIN
+    INSERT INTO Factura (numeroFactura, estado, totalFactura, fechaFactura, clienteId, codigoEmpleado)
+    VALUES (numeroFactura, estado, totalFactura, fechaFactura, clienteId, codigoEmpleado);
+END $$
+
+DELIMITER ;
+
+CALL sp_AgregarFactura(1, 'Pagada', 150.50, '2024-05-19', 1, 1);
+CALL sp_AgregarFactura(2, 'Pendiente', 200.75, '2024-05-18', 2, 2);
+CALL sp_AgregarFactura(3, 'Cancelada', 300.00, '2024-05-17', 3, 3);
+CALL sp_AgregarFactura(4, 'Pagada', 450.25, '2024-05-16', 4, 4);
+
+
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_ListarFactura()
+BEGIN
+    SELECT * FROM Factura;
+END $$
+
+DELIMITER ;
+
+CALL sp_ListarFactura();
+
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_BuscarFactura (IN numeroFactura INT)
+BEGIN
+    SELECT
+        numeroFactura,
+        estado,
+        totalFactura,
+        fechaFactura,
+        clienteId,
+        codigoEmpleado
+    FROM
+        Factura
+    WHERE
+        numeroFactura = numeroFactura;
 END $$
 
 DELIMITER ;
 
 
+CALL sp_BuscarFactura(1);
 
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_ActualizarFactura (
+    IN numeroFactura INT,
+    IN estado VARCHAR(50),
+    IN totalFactura DECIMAL(10,2),
+    IN fechaFactura VARCHAR(45),
+    IN clienteId INT,
+    IN codigoEmpleado INT
+)
+BEGIN
+    UPDATE Factura SET 
+		Factura.estado = estado,
+        Factura.totalFactura = totalFactura,
+        Factura.fechaFactura = fechaFactura,
+        Factura.clienteId = clienteId,
+        Factura.codigoEmpleado = codigoEmpleado
+    WHERE Factura.numeroFactura = numeroFactura;
+END $$
+
+DELIMITER ;
+
+CALL sp_ActualizarFactura(1, 'Pendiente', 155.75, '2024-05-19', 1, 1);
+
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_EliminarFactura (
+    IN p_numeroFactura INT
+)
+BEGIN
+    DELETE FROM Factura WHERE numeroFactura = p_numeroFactura;
+END $$
+
+DELIMITER ;
+----------------------------------------------------
+DELIMITER $$
+
+CREATE PROCEDURE sp_AgregarDetalleFactura (
+    IN codigoDetalleFactura INT,
+    IN precioUnitario DECIMAL(10,2),
+    IN cantidad INT,
+    IN numeroFactura INT,
+    IN codigoProducto VARCHAR(45)
+)
+BEGIN
+    INSERT INTO DetalleFactura (codigoDetalleFactura, precioUnitario, cantidad, numeroFactura, codigoProducto)
+    VALUES (codigoDetalleFactura, precioUnitario, cantidad, numeroFactura, codigoProducto);
+END $$
+
+DELIMITER ;
+
+CALL sp_AgregarDetalleFactura(1, 25.50, 2, 1, '1');
+CALL sp_AgregarDetalleFactura(2, 35.75, 1, 2, '2');
+CALL sp_AgregarDetalleFactura(3, 50.00, 3, 3, '3');
+CALL sp_AgregarDetalleFactura(4, 15.25, 4, 4, '4');
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_ListarDetallesFactura()
+BEGIN
+    SELECT * FROM DetalleFactura;
+END $$
+
+DELIMITER ;
+CALL sp_ListarDetallesFactura();
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_BuscarDetalleFactura (
+    IN p_codigoDetalleFactura INT
+)
+BEGIN
+    SELECT
+        codigoDetalleFactura,
+        precioUnitario,
+        cantidad,
+        numeroFactura,
+        codigoProducto
+    FROM
+        DetalleFactura
+    WHERE
+        codigoDetalleFactura = p_codigoDetalleFactura;
+END $$
+
+DELIMITER ;
+
+CALL sp_BuscarDetalleFactura(1);
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_ActualizarDetalleFactura (
+    IN codigoDetalleFactura INT,
+    IN precioUnitario DECIMAL(10,2),
+    IN cantidad INT,
+    IN numeroFactura INT,
+    IN codigoProducto VARCHAR(45)
+)
+BEGIN
+    UPDATE DetalleFactura SET
+		DetalleFactura.precioUnitario = precioUnitario,
+        DetalleFactura.cantidad = cantidad,
+        DetalleFactura.numeroFactura = numeroFactura,
+        DetalleFactura.codigoProducto = codigoProducto
+    WHERE DetalleFactura.codigoDetalleFactura = codigoDetalleFactura;
+END $$
+
+DELIMITER ;
+
+CALL sp_ActualizarDetalleFactura(1, 30.00, 2, 1, '1');
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_EliminarDetalleFactura (
+    IN p_codigoDetalleFactura INT
+)
+BEGIN
+    DELETE FROM DetalleFactura WHERE codigoDetalleFactura = p_codigoDetalleFactura;
+END $$
+
+DELIMITER ;

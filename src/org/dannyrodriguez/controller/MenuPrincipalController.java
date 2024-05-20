@@ -1,10 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.dannyrodriguez.controller;
 
+package org.dannyrodriguez.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -14,6 +9,7 @@ import javafx.scene.control.MenuItem;
 import org.dannyrodriguez.system.Principal;
 
 public class MenuPrincipalController implements Initializable {
+
     private Principal escenarioPrincipal;
     @FXML
     MenuItem btnMenuClientes;
@@ -37,8 +33,11 @@ public class MenuPrincipalController implements Initializable {
     MenuItem btnMenuTelefonoProveedor;
     @FXML
     MenuItem btnMenuDetallesCompras;
-    
-    
+    @FXML
+    MenuItem btnMenuFactura;
+    @FXML
+    MenuItem btnMenuDetalleFactura;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -66,16 +65,21 @@ public class MenuPrincipalController implements Initializable {
             escenarioPrincipal.menuComprasView();
         } else if (event.getSource() == btnMenuCargoEmpleado) {
             escenarioPrincipal.menuCargoEmpleadoView();
-        }else if (event.getSource() == btnMenuProductos) {
+        } else if (event.getSource() == btnMenuProductos) {
             escenarioPrincipal.menuProductoView();
-        }else if (event.getSource() == btnMenuEmailProveedor) {
+        } else if (event.getSource() == btnMenuEmailProveedor) {
             escenarioPrincipal.menuEmailProveedorView();
-        }else if (event.getSource() == btnMenuEmpleado) {
+        } else if (event.getSource() == btnMenuEmpleado) {
             escenarioPrincipal.menuEmpleadoView();
-        }else if (event.getSource() == btnMenuTelefonoProveedor) {
+        } else if (event.getSource() == btnMenuTelefonoProveedor) {
             escenarioPrincipal.menuTelefonoProveedorView();
-        }else if (event.getSource() == btnMenuDetallesCompras) {
+        } else if (event.getSource() == btnMenuDetallesCompras) {
             escenarioPrincipal.menuDetalleCompraView();
+        } else if (event.getSource() == btnMenuFactura) {
+            escenarioPrincipal.menuFacturaView();
+        } else if (event.getSource() == btnMenuDetalleFactura) {
+            escenarioPrincipal.menuDetalleFacturaView();
         }
+
     }
 }

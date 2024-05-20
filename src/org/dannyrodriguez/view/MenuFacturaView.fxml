@@ -14,14 +14,14 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="org.dannyrodriguez.controller.MenuFacturaController">
    <children>
-      <TableView layoutX="22.0" layoutY="164.0" prefHeight="200.0" prefWidth="452.0">
+      <TableView fx:id="tvFactura" layoutX="22.0" layoutY="164.0" prefHeight="200.0" prefWidth="452.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="NumeroFactura" />
-          <TableColumn prefWidth="75.0" text="Estado" />
-            <TableColumn prefWidth="75.0" text="TotalFactura" />
-            <TableColumn prefWidth="75.0" text="FechaFactura" />
-            <TableColumn prefWidth="75.0" text="ClienteId" />
-            <TableColumn prefWidth="75.0" text="CodigoEmpleado" />
+          <TableColumn fx:id="colNumeroFactura" prefWidth="75.0" text="NumeroFactura" />
+          <TableColumn fx:id="colEstado" prefWidth="75.0" text="Estado" />
+            <TableColumn fx:id="colTotalFactura" prefWidth="75.0" text="TotalFactura" />
+            <TableColumn fx:id="colFechaFactura" prefWidth="75.0" text="FechaFactura" />
+            <TableColumn fx:id="colClienteId" prefWidth="75.0" text="ClienteId" />
+            <TableColumn fx:id="colCodigoEmpleado" prefWidth="75.0" text="CodigoEmpleado" />
         </columns>
       </TableView>
       <GridPane layoutX="148.0" layoutY="22.0">
@@ -38,9 +38,9 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="NumeroFactura" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Estado" GridPane.rowIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TotalFactura" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtNumeroFactura" GridPane.columnIndex="1" />
+            <TextField fx:id="txtEstado" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtTotalFactura" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <GridPane layoutX="374.0" layoutY="22.0">
@@ -57,9 +57,9 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FechaFactura" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ClienteId" GridPane.rowIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CodigoEmpleado" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtFechaFactura" GridPane.columnIndex="1" />
+            <ComboBox fx:id="cmdClienteId" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cmdCodigoEmpleado" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <GridPane layoutX="486.0" layoutY="182.0">
@@ -74,11 +74,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="155.0" text="Agregar" />
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="122.0" text="Editar" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="131.0" text="Eliminar" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="138.0" text="Reporte" GridPane.rowIndex="3" />
-            <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="160.0" text="Regresar" GridPane.rowIndex="4" />
+            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregar" prefHeight="39.0" prefWidth="155.0" text="Agregar" />
+            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="50.0" prefWidth="122.0" text="Editar" GridPane.rowIndex="1" />
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" prefHeight="36.0" prefWidth="131.0" text="Eliminar" GridPane.rowIndex="2" />
+            <Button fx:id="btnReporte" mnemonicParsing="false" prefHeight="43.0" prefWidth="138.0" text="Reporte" GridPane.rowIndex="3" />
+            <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="57.0" prefWidth="160.0" text="Regresar" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>
