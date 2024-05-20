@@ -1209,53 +1209,35 @@ BEGIN
 END $$
 DELIMITER ;
 
--- Trigger to calculate totalDocumento in Compras table
-DELIMITER //
-CREATE TRIGGER trg_calculate_total_documento
+-- Trigger para actualizar precios y existencia en la entidad Productos
+DELIMITER $$
+CREATE TRIGGER actualizar_precios_existencia
 AFTER INSERT ON DetalleCompra
 FOR EACH ROW
 BEGIN
+    -- Actualizar precioUnitario, precioDocena y precioMayor
+    UPDATE Productos
+    SET precioUnitario = NEW.costoUnitario * 1.4, -- 40% de ganancia
+        precioDocena = NEW.costoUnitario * 1.35, -- 35% de ganancia
+        precioMayor = NEW.costoUnitario * 1.25, -- 25% de ganancia
+        existencia = existencia + NEW.cantidad
+    WHERE codigoProducto = NEW.codigoProducto;
+END$$
+DELIMITER ;
+
+-- Trigger para calcular el totalDocumento en la entidad Compras
+DELIMITER $$
+CREATE TRIGGER calcular_total_documento
+AFTER INSERT ON DetalleCompra
+FOR EACH ROW
+BEGIN
+    -- Calcular el totalDocumento
     DECLARE total DECIMAL(10,2);
-    SET total = (SELECT SUM(costoUnitario * cantidad) FROM DetalleCompra WHERE numeroDocumento = NEW.numeroDocumento);
+    SELECT SUM(costoUnitario * cantidad) INTO total FROM DetalleCompra WHERE numeroDocumento = NEW.numeroDocumento;
     UPDATE Compras SET totalDocumento = total WHERE numeroDocumento = NEW.numeroDocumento;
-END;
-//
+END$$
 DELIMITER ;
 
--- Trigger to update precios in Productos table after insert on DetalleCompra
-DELIMITER //
-CREATE TRIGGER trg_update_precios_after_insert
-AFTER INSERT ON DetalleCompra
-FOR EACH ROW
-BEGIN
-    DECLARE unitario DECIMAL(10,2);
-    DECLARE docena DECIMAL(10,2);
-    DECLARE mayor DECIMAL(10,2);
-    
-    SET unitario = NEW.costoUnitario * 1.40;
-    SET docena = NEW.costoUnitario * 12 * 1.35;
-    SET mayor = NEW.costoUnitario * 24 * 1.25;
-    
-    UPDATE Productos SET precioUnitario = unitario, precioDocena = docena, precioMayor = mayor WHERE codigoProducto = NEW.codigoProducto;
-END;
-//
-DELIMITER ;
+SELECT * FROM Compras WHERE numeroDocumento = 1;
 
--- Trigger to update precios in Productos table after update on DetalleCompra
-DELIMITER //
-CREATE TRIGGER trg_update_precios_after_update
-AFTER UPDATE ON DetalleCompra
-FOR EACH ROW
-BEGIN
-    DECLARE unitario DECIMAL(10,2);
-    DECLARE docena DECIMAL(10,2);
-    DECLARE mayor DECIMAL(10,2);
-    
-    SET unitario = NEW.costoUnitario * 1.40;
-    SET docena = NEW.costoUnitario * 12 * 1.35;
-    SET mayor = NEW.costoUnitario * 24 * 1.25;
-    
-    UPDATE Productos SET precioUnitario = unitario, precioDocena = docena, precioMayor = mayor WHERE codigoProducto = NEW.codigoProducto;
-END;
-//
-DELIMITER ;
+SELECT * FROM Productos WHERE codigoProducto = '1';
