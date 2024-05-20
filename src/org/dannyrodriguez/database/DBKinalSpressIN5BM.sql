@@ -836,10 +836,10 @@ CALL sp_ActualizarEmailProveedor(1, 'nuevo_email@example.com', 'Actualizado', 1)
 
 DELIMITER $$
 
-CREATE PROCEDURE sp_EliminarEmailProveedor (IN codigoEmailProveedor INT)
+CREATE PROCEDURE sp_EliminarEmailProveedor (IN CodigoEmailProveedor INT)
 BEGIN
     DELETE FROM EmailProveedor
-    WHERE codigoEmailProveedor = codigoEmailProveedor;
+    WHERE codigoEmailProveedor = CodigoEmailProveedor;
 END $$
 
 DELIMITER ;

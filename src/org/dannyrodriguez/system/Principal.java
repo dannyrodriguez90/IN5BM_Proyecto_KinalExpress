@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import org.dannyrodriguez.controller.MenuCargoEmpleadoController;
 import org.dannyrodriguez.controller.MenuClientesController;
 import org.dannyrodriguez.controller.MenuComprasController;
+import org.dannyrodriguez.controller.MenuDetalleCompraController;
 import org.dannyrodriguez.controller.MenuEmailProveedorController;
 import org.dannyrodriguez.controller.MenuEmpleadoController;
 import org.dannyrodriguez.controller.MenuPrincipalController;
@@ -155,6 +156,16 @@ public void menuPrincipalView (){
         MenuTelefonoProveedorController menuTelefonoProveedorView = (MenuTelefonoProveedorController)cambiarEscena
         ("MenuTelefonoProveedorView.fxml",625,440 );
         menuTelefonoProveedorView.setEscenarioPrincipal(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage()); 
+        }
+    }
+    
+    public void menuDetalleCompraView (){
+    try{
+        MenuDetalleCompraController menuDetalleCompraView = (MenuDetalleCompraController)cambiarEscena
+        ("MenuDetalleComprasView.fxml",625,440 );
+        menuDetalleCompraView.setEscenarioPrincipal(this);
         }catch(Exception e){
             System.out.println(e.getMessage()); 
         }

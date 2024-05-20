@@ -52,4 +52,12 @@ public class Compras {
     public void setTotalDocumento(BigDecimal totalDocumento) {
         this.totalDocumento = totalDocumento;
     }
+    
+    
+    
+    @Override
+    public String toString() {
+        return getNumeroDocumento()+ " | " + getDescripcion();
+    }
+
 }

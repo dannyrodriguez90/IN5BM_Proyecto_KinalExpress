@@ -281,8 +281,8 @@ public class MenuProductosController implements Initializable {
             txtPrecioD.setText(String.valueOf(productoSeleccionado.getPrecioDocena()));
             txtPrecioM.setText(String.valueOf(productoSeleccionado.getPrecioMayor()));
             txtExistencia.setText(String.valueOf(productoSeleccionado.getExistencia()));
-            cmbCodigoTipoProducto.getSelectionModel().select(buscarTipoDeProducto(productoSeleccionado.getCodigoTipoProducto()));
-            cmbCodigoProveedor.getSelectionModel().select(buscarProveedor(productoSeleccionado.getCodigoProveedor()));
+            cmbCodigoTipoProducto.getSelectionModel().select((productoSeleccionado.getCodigoTipoProducto()));
+            cmbCodigoProveedor.getSelectionModel().select((productoSeleccionado.getCodigoProveedor()));
         }
     }
 
@@ -297,8 +297,8 @@ public class MenuProductosController implements Initializable {
                     txtPrecioD.setText(String.valueOf(productoSeleccionado.getPrecioDocena()));
                     txtPrecioM.setText(String.valueOf(productoSeleccionado.getPrecioMayor()));
                     txtExistencia.setText(String.valueOf(productoSeleccionado.getExistencia()));
-                    cmbCodigoTipoProducto.getSelectionModel().select(buscarTipoDeProducto(productoSeleccionado.getCodigoTipoProducto()));
-                    cmbCodigoProveedor.getSelectionModel().select(buscarProveedor(productoSeleccionado.getCodigoProveedor()));
+                    cmbCodigoTipoProducto.getSelectionModel().select((productoSeleccionado.getCodigoTipoProducto()));
+                    cmbCodigoProveedor.getSelectionModel().select((productoSeleccionado.getCodigoProveedor()));
                     btnEditar.setText("Actualizar");
                     btnReporte.setText("Cancelar");
                     btnAgregar.setDisable(true);
@@ -424,23 +424,7 @@ public class MenuProductosController implements Initializable {
         this.escenarioPrincipal = escenarioPrincipal;
     }
 
-    private TipoDeProducto buscarTipoDeProducto(int codigoTipoProducto) {
-        for (TipoDeProducto tipo : listaTipoDeProducto) {
-            if (tipo.getCodigoTipoProducto() == codigoTipoProducto) {
-                return tipo;
-            }
-        }
-        return null;
-    }
-
-    private Proveedor buscarProveedor(int codigoProveedor) {
-        for (Proveedor proveedor : listaProveedor) {
-            if (proveedor.getCodigoProveedor() == codigoProveedor) {
-                return proveedor;
-            }
-        }
-        return null;
-    }
+    
 
     @FXML
     public void handleButtonAction(ActionEvent event) {

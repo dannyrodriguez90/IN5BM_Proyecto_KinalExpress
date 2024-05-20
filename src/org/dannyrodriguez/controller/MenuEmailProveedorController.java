@@ -27,11 +27,11 @@ import org.dannyrodriguez.db.Conexion;
 import org.dannyrodriguez.system.Principal;
 
 public class MenuEmailProveedorController implements Initializable {
-
     private ObservableList<EmailProveedor> listaEmail;
     private ObservableList<Proveedor> listaProveedor;
     private Principal escenarioPrincipal;
-
+    
+    
     private enum operaciones {
         AGREGAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NULL
     }
@@ -93,7 +93,7 @@ public class MenuEmailProveedorController implements Initializable {
         txtCoEmailPro.setText(String.valueOf(emailProveedorSeleccionado.getCodigoEmailProveedor()));
         txtEmailProveedores.setText(emailProveedorSeleccionado.getEmailProveedor());
         txtDescripcion.setText(emailProveedorSeleccionado.getDescripcion());
-        cmbCodigoProveedor.getSelectionModel().select(buscarProveedor(emailProveedorSeleccionado.getCodigoProveedor()));
+        cmbCodigoProveedor.getSelectionModel().select((emailProveedorSeleccionado.getCodigoProveedor()));
     }
 }
 
@@ -225,7 +225,7 @@ public class MenuEmailProveedorController implements Initializable {
                     txtCoEmailPro.setText(String.valueOf(emailSeleccionado.getCodigoEmailProveedor()));
                     txtEmailProveedores.setText(emailSeleccionado.getEmailProveedor());
                     txtDescripcion.setText(emailSeleccionado.getDescripcion());
-                    cmbCodigoProveedor.getSelectionModel().select(buscarProveedor(emailSeleccionado.getCodigoProveedor()));
+                    cmbCodigoProveedor.getSelectionModel().select((emailSeleccionado.getCodigoProveedor()));
                     btnEditar.setText("Actualizar");
                     btnReporte.setText("Cancelar");
                     btnAgregar.setDisable(true);
@@ -260,7 +260,7 @@ public class MenuEmailProveedorController implements Initializable {
         emailProveedorSeleccionado.setDescripcion(txtDescripcion.getText());
         
         try {
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{CALL sp_actualizarEmailProveedor(?, ?, ?, ?)}");
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{CALL sp_ActualizarEmailProveedor(?, ?, ?, ?)}");
             procedimiento.setInt(1, emailProveedorSeleccionado.getCodigoEmailProveedor());
             procedimiento.setString(2, emailProveedorSeleccionado.getEmailProveedor());
             procedimiento.setString(3, emailProveedorSeleccionado.getDescripcion());
@@ -277,37 +277,41 @@ public class MenuEmailProveedorController implements Initializable {
 
 
 
+    
     public void eliminar() {
-        if (tipoDeOperaciones == operaciones.AGREGAR) {
-            desactivarControles();
-            limpiarControles();
-            btnAgregar.setText("Agregar");
-            btnEliminar.setText("Eliminar");
-            btnEditar.setDisable(false);
-            btnReporte.setDisable(false);
-            imgAgregar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
-            imgEliminar.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
-            tipoDeOperaciones = operaciones.NULL;
-        } else {
-            if (tvEmail.getSelectionModel().getSelectedItem() != null) {
-                int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el registro?", "Eliminar Email del Proveedor", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (respuesta == JOptionPane.YES_OPTION) {
-                    try {
-                        PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{CALL sp_EliminarEmailProveedor(?)}");
-                        procedimiento.setInt(1, tvEmail.getSelectionModel().getSelectedItem().getCodigoEmailProveedor());
-                        procedimiento.execute();
-                        listaEmail.remove(tvEmail.getSelectionModel().getSelectedIndex());
-                        limpiarControles();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                        System.err.println("Error al eliminar el email del proveedor: " + e.getMessage());
-                    }
+    if (tipoDeOperaciones == operaciones.AGREGAR) {
+        desactivarControles();
+        limpiarControles();
+        btnAgregar.setText("Agregar");
+        btnEliminar.setText("Eliminar");
+        btnEditar.setDisable(false);
+        btnReporte.setDisable(false);
+        imgAgregar.setImage(new Image("/org/dannyrodriguez/images/agregar-usuario.png"));
+        imgEliminar.setImage(new Image("/org/dannyrodriguez/images/contenedor-de-basura.png"));
+        tipoDeOperaciones = operaciones.NULL;
+    } else {
+        if (tvEmail.getSelectionModel().getSelectedItem() != null) {
+            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el registro?", "Eliminar Email Proveedor", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                try {
+                    EmailProveedor seleccionado = tvEmail.getSelectionModel().getSelectedItem();
+                    PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{CALL sp_EliminarEmailProveedor(?)}");
+                    procedimiento.setInt(1, seleccionado.getCodigoEmailProveedor());
+                    procedimiento.execute();
+                    listaEmail.remove(seleccionado);
+                    limpiarControles();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    System.err.println("Error al eliminar el email del proveedor: " + e.getMessage());
                 }
-            } else {
-                System.out.println("Debe seleccionar un elemento.");
             }
+        } else {
+            System.out.println("Debe seleccionar un elemento.");
         }
     }
+}
+
+
 
 // Métodos de activación, desactivación y limpieza de controles
     public void activarControles() {
@@ -339,15 +343,7 @@ public class MenuEmailProveedorController implements Initializable {
         this.escenarioPrincipal = escenarioPrincipal;
     }
 
-    private Proveedor buscarProveedor(int codigoProveedor) {
-        for (Proveedor proveedor : listaProveedor) {
-            if (proveedor.getCodigoProveedor() == codigoProveedor) {
-                return proveedor;
-            }
-        }
-        return null;
-    }
-
+    
     @FXML
     public void handleButtonAction(ActionEvent event) {
         if (event.getSource() == btnRegresar) {

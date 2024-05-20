@@ -93,6 +93,10 @@ public class Productos {
         this.codigoTipoProducto = codigoTipoProducto;
     }
 
-   
+   @Override
+    public String toString() {
+        return getCodigoProducto()+ " | " + getDescripcionProducto();
+    }
+
     
 }
