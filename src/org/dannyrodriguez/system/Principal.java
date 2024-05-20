@@ -118,7 +118,7 @@ public class Principal extends Application {
 
     public void menuProductoView() {
         try {
-            MenuProductosController menuProductoView = (MenuProductosController) cambiarEscena("MenuProductosView.fxml", 625, 440);
+            MenuProductosController menuProductoView = (MenuProductosController) cambiarEscena("MenuProductosView.fxml", 670, 470);
             menuProductoView.setEscenarioPrincipal(this);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -127,7 +127,7 @@ public class Principal extends Application {
 
     public void menuEmailProveedorView() {
         try {
-            MenuEmailProveedorController menuEmailProveedorView = (MenuEmailProveedorController) cambiarEscena("MenuEmailProveedorView.fxml", 625, 440);
+            MenuEmailProveedorController menuEmailProveedorView = (MenuEmailProveedorController) cambiarEscena("MenuEmailProveedorView.fxml", 595, 420);
             menuEmailProveedorView.setEscenarioPrincipal(this);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -136,7 +136,7 @@ public class Principal extends Application {
 
     public void menuEmpleadoView() {
         try {
-            MenuEmpleadoController menuEmpleadoView = (MenuEmpleadoController) cambiarEscena("MenuEmpleadosView.fxml", 625, 440);
+            MenuEmpleadoController menuEmpleadoView = (MenuEmpleadoController) cambiarEscena("MenuEmpleadosView.fxml", 595, 425);
             menuEmpleadoView.setEscenarioPrincipal(this);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -145,7 +145,7 @@ public class Principal extends Application {
 
     public void menuTelefonoProveedorView() {
         try {
-            MenuTelefonoProveedorController menuTelefonoProveedorView = (MenuTelefonoProveedorController) cambiarEscena("MenuTelefonoProveedorView.fxml", 625, 440);
+            MenuTelefonoProveedorController menuTelefonoProveedorView = (MenuTelefonoProveedorController) cambiarEscena("MenuTelefonoProveedorView.fxml", 600, 420);
             menuTelefonoProveedorView.setEscenarioPrincipal(this);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -154,7 +154,7 @@ public class Principal extends Application {
 
     public void menuDetalleCompraView() {
         try {
-            MenuDetalleCompraController menuDetalleCompraView = (MenuDetalleCompraController) cambiarEscena("MenuDetalleComprasView.fxml", 625, 440);
+            MenuDetalleCompraController menuDetalleCompraView = (MenuDetalleCompraController) cambiarEscena("MenuDetalleComprasView.fxml", 595, 420);
             menuDetalleCompraView.setEscenarioPrincipal(this);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -163,7 +163,7 @@ public class Principal extends Application {
 
     public void menuFacturaView() {
         try {
-            MenuFacturaController menuFacturaView = (MenuFacturaController) cambiarEscena("MenuFacturaView.fxml", 625, 440);
+            MenuFacturaController menuFacturaView = (MenuFacturaController) cambiarEscena("MenuFacturaView.fxml", 606, 426);
             menuFacturaView.setEscenarioPrincipal(this);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -172,7 +172,7 @@ public class Principal extends Application {
 
     public void menuDetalleFacturaView() {
         try {
-            MenuDetalleFacturaController menuDetalleFacturaView = (MenuDetalleFacturaController) cambiarEscena("MenuDetalleFacturaView.fxml", 625, 440);
+            MenuDetalleFacturaController menuDetalleFacturaView = (MenuDetalleFacturaController) cambiarEscena("MenuDetalleFacturaView.fxml", 606, 426);
             menuDetalleFacturaView.setEscenarioPrincipal(this);
         } catch (Exception e) {
             System.out.println(e.getMessage());

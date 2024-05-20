@@ -17,6 +17,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
 import org.dannyrodriguez.bean.CargoEmpleado;
 import org.dannyrodriguez.bean.Empleados;
@@ -33,7 +35,14 @@ public class MenuEmpleadoController implements Initializable {
     }
 
     private operaciones tipoDeOperaciones = operaciones.NULL;
-
+    @FXML
+    private ImageView imgAgregar;
+    @FXML
+    private ImageView imgEliminar;
+    @FXML
+    private ImageView imgEditar;
+    @FXML
+    private ImageView imgReporte;
     @FXML
     private TableView<Empleados> tvEmpleados;
     @FXML
@@ -150,6 +159,8 @@ public class MenuEmpleadoController implements Initializable {
                 btnEliminar.setText("Cancelar");
                 btnEditar.setDisable(true);
                 btnReporte.setDisable(true);
+                imgAgregar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
+                imgEliminar.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
                 tipoDeOperaciones = operaciones.AGREGAR;
                 break;
             case AGREGAR:
@@ -162,6 +173,8 @@ public class MenuEmpleadoController implements Initializable {
                     btnEliminar.setText("Eliminar");
                     btnEditar.setDisable(false);
                     btnReporte.setDisable(false);
+                    imgAgregar.setImage(new Image("/org/dannyrodriguez/images/agregar-paquete.png"));
+                    imgEliminar.setImage(new Image("/org/dannyrodriguez/images/borrar.png"));
                     tipoDeOperaciones = operaciones.NULL;
                 } catch (NullPointerException e) {
                     e.printStackTrace();
@@ -237,6 +250,8 @@ public class MenuEmpleadoController implements Initializable {
                     btnReporte.setText("Cancelar");
                     btnAgregar.setDisable(true);
                     btnEliminar.setDisable(true);
+                    imgEditar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
+                    imgReporte.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
                     activarControles();
                     tipoDeOperaciones = operaciones.ACTUALIZAR;
                 } else {
@@ -290,6 +305,8 @@ public class MenuEmpleadoController implements Initializable {
                 btnEliminar.setText("Eliminar");
                 btnEditar.setDisable(false);
                 btnReporte.setDisable(false);
+                imgAgregar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
+                imgEliminar.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
                 tipoDeOperaciones = operaciones.NULL;
                 break;
             default:

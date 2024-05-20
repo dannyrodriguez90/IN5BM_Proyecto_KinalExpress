@@ -18,6 +18,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
 import org.dannyrodriguez.bean.Clientes;
 import org.dannyrodriguez.bean.Empleados;
@@ -37,7 +39,14 @@ public class MenuFacturaController implements Initializable {
     }
 
     private operaciones tipoDeOperaciones = operaciones.NULL;
-
+    @FXML
+    private ImageView imgAgregar;
+    @FXML
+    private ImageView imgEliminar;
+    @FXML
+    private ImageView imgEditar;
+    @FXML
+    private ImageView imgReporte;
     @FXML
     private TableView<Factura> tvFactura;
     @FXML
@@ -180,6 +189,8 @@ public class MenuFacturaController implements Initializable {
                 btnEliminar.setText("Cancelar");
                 btnEditar.setDisable(true);
                 btnReporte.setDisable(true);
+                imgAgregar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
+                imgEliminar.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
                 tipoDeOperaciones = operaciones.AGREGAR;
                 break;
             case AGREGAR:
@@ -192,6 +203,8 @@ public class MenuFacturaController implements Initializable {
                     btnEliminar.setText("Eliminar");
                     btnEditar.setDisable(false);
                     btnReporte.setDisable(false);
+                    imgAgregar.setImage(new Image("/org/dannyrodriguez/images/agregar.png"));
+                    imgEliminar.setImage(new Image("/org/dannyrodriguez/images/basuraz.png"));
                     tipoDeOperaciones = operaciones.NULL;
                 } catch (NullPointerException e) {
                     e.printStackTrace();
@@ -271,6 +284,8 @@ public class MenuFacturaController implements Initializable {
                     btnReporte.setText("Cancelar");
                     btnAgregar.setDisable(true);
                     btnEliminar.setDisable(true);
+                    imgEditar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
+                    imgReporte.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
                     tipoDeOperaciones = operaciones.EDITAR;
                 } else {
                     JOptionPane.showMessageDialog(null, "Debe seleccionar un elemento.");
@@ -342,6 +357,8 @@ public class MenuFacturaController implements Initializable {
             btnReporte.setText("Reporte");
             btnAgregar.setDisable(false);
             btnEliminar.setDisable(false);
+            imgAgregar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
+            imgEliminar.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
             tipoDeOperaciones = operaciones.NULL;
         } else {
             if (tvFactura.getSelectionModel().getSelectedItem() != null) {

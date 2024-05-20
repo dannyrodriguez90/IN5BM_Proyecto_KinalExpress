@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -34,9 +36,18 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CodigoEmpleado" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombres" GridPane.rowIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Apellidos" GridPane.rowIndex="2" />
-            <TextField fx:id="txtCodigoEmpleado" GridPane.columnIndex="1" />
-            <TextField fx:id="txtNombreEmpleado" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtApellidoEmpleado" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtCodigoEmpleado" GridPane.columnIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
+            <TextField fx:id="txtNombreEmpleado" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
+            <TextField fx:id="txtApellidoEmpleado" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
          </children>
       </GridPane>
       <GridPane layoutX="325.0" layoutY="14.0" prefHeight="106.0" prefWidth="252.0">
@@ -55,13 +66,25 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Direccion" GridPane.rowIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turno" GridPane.rowIndex="2" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CodigoCargoEmpleado" GridPane.rowIndex="3" />
-            <TextField fx:id="txtSueldo" GridPane.columnIndex="1" />
-            <TextField fx:id="txtDireccion" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtTurno" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ComboBox fx:id="cmbCargoEmpleado" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="txtSueldo" GridPane.columnIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
+            <TextField fx:id="txtDireccion" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
+            <TextField fx:id="txtTurno" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <effect>
+                  <DropShadow />
+               </effect></TextField>
+            <ComboBox fx:id="cmbCargoEmpleado" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <effect>
+                  <DropShadow />
+               </effect></ComboBox>
          </children>
       </GridPane>
-      <TableView fx:id="tvEmpleados" layoutX="51.0" layoutY="186.0" prefHeight="200.0" prefWidth="524.0" stylesheets="@../resource/KinalExpresCSS.css">
+      <TableView fx:id="tvEmpleados" layoutX="51.0" layoutY="205.0" prefHeight="200.0" prefWidth="524.0" stylesheets="@../resource/KinalExpresCSS.css">
         <columns>
           <TableColumn fx:id="colCodigoEmpleado" prefWidth="75.0" text="Empleado" />
           <TableColumn fx:id="colNombreEmpleado" prefWidth="75.0" text="Nombres" />
@@ -71,8 +94,11 @@
             <TableColumn fx:id="colTurno" prefWidth="75.0" text="Turno" />
             <TableColumn fx:id="colCargoEmpleado" prefWidth="75.0" text="Cargo" />
         </columns>
+         <effect>
+            <DropShadow />
+         </effect>
       </TableView>
-      <GridPane layoutX="57.0" layoutY="144.0">
+      <GridPane layoutX="57.0" layoutY="144.0" prefHeight="47.0" prefWidth="513.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -84,11 +110,66 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="65.0" prefWidth="160.0" text="Editar" />
-            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregar" prefHeight="77.0" prefWidth="142.0" text="Agregar" GridPane.columnIndex="1" />
-            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" prefHeight="90.0" prefWidth="135.0" text="Eliminar" GridPane.columnIndex="2" />
-            <Button fx:id="btnReporte" mnemonicParsing="false" prefHeight="61.0" prefWidth="171.0" text="Reporte" GridPane.columnIndex="3" />
-            <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="61.0" prefWidth="145.0" text="Regresar" GridPane.columnIndex="4" />
+            <Button fx:id="btnEditar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#editar" prefHeight="65.0" prefWidth="160.0" style="-fx-background-color: #F7BFBE;" text="Editar">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </GridPane.margin></Button>
+            <Button fx:id="btnAgregar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#agregar" prefHeight="77.0" prefWidth="142.0" style="-fx-background-color: #F7BFBE;" text="Agregar" GridPane.columnIndex="1">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </GridPane.margin></Button>
+            <Button fx:id="btnEliminar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#eliminar" prefHeight="90.0" prefWidth="135.0" style="-fx-background-color: #F7BFBE;" text="Eliminar" GridPane.columnIndex="2">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </GridPane.margin></Button>
+            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="61.0" prefWidth="171.0" style="-fx-background-color: #F7BFBE;" text="Reporte" GridPane.columnIndex="3">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </GridPane.margin></Button>
+            <Button fx:id="btnRegresar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="73.0" prefWidth="118.0" style="-fx-background-color: #F7BFBE;" text="Regresar" GridPane.columnIndex="4">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </GridPane.margin></Button>
+            <ImageView fx:id="imgAgregar" fitHeight="46.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@../images/agregar-paquete.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgEditar" fitHeight="43.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/archivo-de-registro.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgEliminar" fitHeight="95.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+               <image>
+                  <Image url="@../images/borrar.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgReporte" fitHeight="91.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
+               <image>
+                  <Image url="@../images/reporte.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="96.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
+               <image>
+                  <Image url="@../images/regreso.png" />
+               </image>
+            </ImageView>
          </children>
       </GridPane>
    </children>

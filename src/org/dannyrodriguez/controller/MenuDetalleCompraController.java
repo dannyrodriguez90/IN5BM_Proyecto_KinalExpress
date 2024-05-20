@@ -39,14 +39,14 @@ public class MenuDetalleCompraController implements Initializable {
     }
 
     private operaciones tipoDeOperaciones = operaciones.NULL;
-    //@FXML
-    //private ImageView imgAgregar;
-    //@FXML
-    //private ImageView imgEliminar;
-    //@FXML
-    //private ImageView imgEditar;
-    //@FXML
-    //private ImageView imgReporte;
+    @FXML
+    private ImageView imgAgregar;
+    @FXML
+    private ImageView imgEliminar;
+    @FXML
+    private ImageView imgEditar;
+    @FXML
+    private ImageView imgReporte;
     @FXML
     private TableView<DetalleCompra> tvDetalleCompra;
     @FXML
@@ -208,8 +208,8 @@ public class MenuDetalleCompraController implements Initializable {
                 btnEliminar.setText("Cancelar");
                 btnEditar.setDisable(true);
                 btnReporte.setDisable(true);
-                //imgAgregar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
-                //imgEliminar.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
+                imgAgregar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
+                imgEliminar.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
                 tipoDeOperaciones = operaciones.AGREGAR;
                 break;
             case AGREGAR:
@@ -221,8 +221,8 @@ public class MenuDetalleCompraController implements Initializable {
                 btnEliminar.setText("Eliminar");
                 btnEditar.setDisable(false);
                 btnReporte.setDisable(false);
-                //imgAgregar.setImage(new Image("/org/dannyrodriguez/images/agregar-producto.png"));
-                //imgEliminar.setImage(new Image("/org/dannyrodriguez/images/carpeta.png"));
+                imgAgregar.setImage(new Image("/org/dannyrodriguez/images/agregar-producto.png"));
+                imgEliminar.setImage(new Image("/org/dannyrodriguez/images/carpeta.png"));
                 tipoDeOperaciones = operaciones.NULL;
                 break;
         }
@@ -260,8 +260,8 @@ public class MenuDetalleCompraController implements Initializable {
                     btnReporte.setText("Cancelar");
                     btnAgregar.setDisable(true);
                     btnEliminar.setDisable(true);
-                    //imgEditar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
-                    //imgReporte.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
+                    imgEditar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
+                    imgReporte.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
                     tipoDeOperaciones = operaciones.ACTUALIZAR;
                 } else {
                     System.out.println("Debe seleccionar un elemento.");
@@ -317,6 +317,8 @@ public class MenuDetalleCompraController implements Initializable {
                     procedimiento.execute();
                     listaDetalleCompra.remove(tvDetalleCompra.getSelectionModel().getSelectedIndex());
                     limpiarControles();
+                    imgAgregar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
+                    imgEliminar.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
                 } catch (SQLException e) {
                     e.printStackTrace();
                     System.err.println("Error al eliminar el detalle de compra: " + e.getMessage());
