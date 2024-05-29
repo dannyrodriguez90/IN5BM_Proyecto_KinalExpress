@@ -122,37 +122,38 @@ public class MenuClientesController implements Initializable {
     }
 
     public void eliminar() {
-        switch (tipoDeOperaciones) {
-            case ACTUALIZAR:
-                desactivarControles();
-                limpiarControles();
-                btnAgregarCliente.setText("Agregar");
-                btnEliminarCliente.setText("Eliminar");
-                btnEditarCliente.setDisable(false);
-                btnReportesClientes.setDisable(false);
-                imgAgregar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
-                imgEliminar.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
-                tipoDeOperaciones = operaciones.NINGUNO;
-                break;
-            default:
-                if (tblClientes.getSelectionModel().getSelectedItem() != null) {
-                    int respuesta = JOptionPane.showConfirmDialog(null, "Confirmar la eliminación del registro", "Eliminar Cliente", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if (respuesta == JOptionPane.YES_NO_OPTION) {
-                        try {
-                            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_eliminarClientes(?)}");
-                            procedimiento.setInt(1, ((Clientes) tblClientes.getSelectionModel().getSelectedItem()).getClienteId());
-                            procedimiento.execute();
-                            listaClientes.remove(tblClientes.getSelectionModel().getSelectedItem());
-                            limpiarControles();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+    switch (tipoDeOperaciones) {
+        case ACTUALIZAR:
+            desactivarControles();
+            limpiarControles();
+            btnAgregarCliente.setText("Agregar");
+            btnEliminarCliente.setText("Eliminar");
+            btnEditarCliente.setDisable(false);
+            btnReportesClientes.setDisable(false);
+            imgAgregar.setImage(new Image("/org/dannyrodriguez/images/guardar.png"));
+            imgEliminar.setImage(new Image("/org/dannyrodriguez/images/cancelar.png"));
+            tipoDeOperaciones = operaciones.NINGUNO;
+            break;
+        default:
+            if (tblClientes.getSelectionModel().getSelectedItem() != null) {
+                int respuesta = JOptionPane.showConfirmDialog(null, "Confirmar la eliminación del registro", "Eliminar Cliente", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (respuesta == JOptionPane.YES_OPTION) { // Se cambió de JOptionPane.YES_NO_OPTION a JOptionPane.YES_OPTION
+                    try {
+                        PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EliminarClientes(?)}"); // Se corrigió el nombre del procedimiento almacenado
+                        procedimiento.setInt(1, ((Clientes) tblClientes.getSelectionModel().getSelectedItem()).getClienteId());
+                        procedimiento.execute();
+                        listaClientes.remove(tblClientes.getSelectionModel().getSelectedItem());
+                        limpiarControles();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Necesitas seleccionar un Cliente antes..");
                 }
-        }
+            } else {
+                JOptionPane.showMessageDialog(null, "Necesitas seleccionar un Cliente antes..");
+            }
     }
+}
+
 
     public void editar() {
         switch (tipoDeOperaciones) {

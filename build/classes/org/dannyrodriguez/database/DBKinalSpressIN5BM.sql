@@ -11,7 +11,7 @@ CREATE TABLE Clientes (
     direccionCliente VARCHAR(150) NOT NULL,
     telefonoCliente VARCHAR(8) NOT NULL,
     correoCliente VARCHAR(45) NOT NULL,
-    PRIMARY KEY PKclienteId (clienteId)
+    PRIMARY KEY PK_clienteId (clienteId)
 );
 
 CREATE TABLE Proveedores(
@@ -71,7 +71,7 @@ CREATE TABLE Empleados(
     direccion VARCHAR (150) NOT NULL,
     turno VARCHAR (15) NOT NULL,
     codigoCargoEmpleado INT NOT NULL,
-    constraint FK_codigoCargoEmpleado foreign key CargoEmpleado(codigoCargoEmpleado)
+    constraint FK_codigoCargoEmpleadoss foreign key CargoEmpleado(codigoCargoEmpleado)
 	references CargoEmpleado(codigoCargoEmpleado),
 	PRIMARY KEY PK_codigoEmpleado (codigoEmpleado)
 );
@@ -103,9 +103,9 @@ CREATE TABLE DetalleCompra(
     cantidad INT NOT NULL,
     codigoProducto VARCHAR (45),
     numeroDocumento INT,
-    constraint FK_codigoProducto foreign key Productos (codigoProducto)
+    constraint FK_codigoProductos foreign key Productos (codigoProducto)
 	references Productos(codigoProducto),
-    constraint FK_numeroDocumento foreign key Compras(numeroDocumento)
+    constraint FK_numeroDocumentoss foreign key Compras(numeroDocumento)
 	references Compras(numeroDocumento),
 	PRIMARY KEY PK_codigoDetalleCompra (codigoDetalleCompra)
 );
@@ -117,9 +117,9 @@ CREATE TABLE Factura(
     fechaFactura VARCHAR (45) NOT NULL,
     clienteId INT NOT NULL,
     codigoEmpleado INT NOT NULL,
-	constraint FK_codigoCliente foreign key Clientes (clienteId)
+	constraint FK_codigoClientes foreign key Clientes (clienteId)
 	references Clientes(clienteId),
-    constraint FK_codigoEmpleado foreign key Empleados(codigoEmpleado)
+    constraint FK_codigoEmpleados foreign key Empleados(codigoEmpleado)
 	references Empleados(codigoEmpleado),
 	PRIMARY KEY PK_numeroFactura (numeroFactura)
 );
@@ -130,9 +130,9 @@ CREATE TABLE DetalleFactura (
     cantidad INT NOT NULL,
     numeroFactura INT NOT NULL,
     codigoProducto VARCHAR(45) NOT NULL,
-    CONSTRAINT FK_numeroFactura FOREIGN KEY Factura (numeroFactura)
+    CONSTRAINT FK_numeroFacturas FOREIGN KEY Factura (numeroFactura)
 	REFERENCES Factura (numeroFactura),
-    CONSTRAINT FK_codigoProducto_DetalleFactura FOREIGN KEY Productos (codigoProducto)
+    CONSTRAINT FK_codigoProducto_DetalleFacturas FOREIGN KEY Productos (codigoProducto)
 	REFERENCES Productos (codigoProducto),
     PRIMARY KEY (codigoDetalleFactura)
 );
@@ -354,7 +354,6 @@ Delimiter $$
 		End $$
 Delimiter ; 
 
-CALL sp_eliminarProveedor(8);
 
 ------------------------------------------------------------------------------
 
@@ -430,7 +429,6 @@ Delimiter $$
 		End $$
 Delimiter ; 
 
-CALL sp_eliminarTipoDeProducto(5);
 
 --------------------------------------------------------------------------------
 
@@ -510,7 +508,6 @@ Delimiter $$
 		End $$
 Delimiter ; 
 
-CALL sp_eliminarCompras(6);
 
 -----------------------------------------------------------------------------------
 DELIMITER $$
@@ -1209,53 +1206,3 @@ BEGIN
 END $$
 DELIMITER ;
 
--- Trigger to calculate totalDocumento in Compras table
-DELIMITER //
-CREATE TRIGGER trg_calculate_total_documento
-AFTER INSERT ON DetalleCompra
-FOR EACH ROW
-BEGIN
-    DECLARE total DECIMAL(10,2);
-    SET total = (SELECT SUM(costoUnitario * cantidad) FROM DetalleCompra WHERE numeroDocumento = NEW.numeroDocumento);
-    UPDATE Compras SET totalDocumento = total WHERE numeroDocumento = NEW.numeroDocumento;
-END;
-//
-DELIMITER ;
-
--- Trigger to update precios in Productos table after insert on DetalleCompra
-DELIMITER //
-CREATE TRIGGER trg_update_precios_after_insert
-AFTER INSERT ON DetalleCompra
-FOR EACH ROW
-BEGIN
-    DECLARE unitario DECIMAL(10,2);
-    DECLARE docena DECIMAL(10,2);
-    DECLARE mayor DECIMAL(10,2);
-    
-    SET unitario = NEW.costoUnitario * 1.40;
-    SET docena = NEW.costoUnitario * 12 * 1.35;
-    SET mayor = NEW.costoUnitario * 24 * 1.25;
-    
-    UPDATE Productos SET precioUnitario = unitario, precioDocena = docena, precioMayor = mayor WHERE codigoProducto = NEW.codigoProducto;
-END;
-//
-DELIMITER ;
-
--- Trigger to update precios in Productos table after update on DetalleCompra
-DELIMITER //
-CREATE TRIGGER trg_update_precios_after_update
-AFTER UPDATE ON DetalleCompra
-FOR EACH ROW
-BEGIN
-    DECLARE unitario DECIMAL(10,2);
-    DECLARE docena DECIMAL(10,2);
-    DECLARE mayor DECIMAL(10,2);
-    
-    SET unitario = NEW.costoUnitario * 1.40;
-    SET docena = NEW.costoUnitario * 12 * 1.35;
-    SET mayor = NEW.costoUnitario * 24 * 1.25;
-    
-    UPDATE Productos SET precioUnitario = unitario, precioDocena = docena, precioMayor = mayor WHERE codigoProducto = NEW.codigoProducto;
-END;
-//
-DELIMITER ;
