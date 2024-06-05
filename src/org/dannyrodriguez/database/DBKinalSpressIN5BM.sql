@@ -137,6 +137,8 @@ CREATE TABLE DetalleFactura (
     PRIMARY KEY (codigoDetalleFactura)
 );
 
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'abc123**';
 ------------------------------------------------------------
 DELIMITER $$
 CREATE PROCEDURE sp_AgregarClientes (
@@ -227,7 +229,7 @@ END $$
 
 DELIMITER ;
 
-CALL sp_editarClientes(2,'f','fh','hf','fhf','fhgfhf','fghfghfg');
+CALL sp_editarClientes(2,'0987654321','María','González','fhf','5555678','mariagonzalez@example.com');
 
 
 Delimiter $$
