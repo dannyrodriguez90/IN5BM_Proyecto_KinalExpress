@@ -139,7 +139,7 @@
                <effect>
                   <DropShadow />
                </effect></Button>
-            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="65.0" prefWidth="168.0" style="-fx-background-color: #F28D33;" text="Reporteria" GridPane.columnIndex="3">
+            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#reporte" prefHeight="65.0" prefWidth="168.0" style="-fx-background-color: #F28D33;" text="Reporteria" GridPane.columnIndex="3">
                <effect>
                   <DropShadow />
                </effect></Button>

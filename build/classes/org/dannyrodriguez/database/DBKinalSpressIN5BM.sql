@@ -138,7 +138,7 @@ CREATE TABLE DetalleFactura (
 );
 
 
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'abc123**';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pitudo37d*';
 ------------------------------------------------------------
 DELIMITER $$
 CREATE PROCEDURE sp_AgregarClientes (
@@ -261,14 +261,11 @@ BEGIN
 END $$
 
 DELIMITER ;
-
-CALL sp_AgregarProveedor(1, 'NITodoFeo', 'Pancho', 'Villa', 'Pollo Campero atrasito', 'olaaa', 'shi','como estas');
-CALL sp_AgregarProveedor(2, 'NITodoFeo', 'Pancho', 'Villa', 'Pollo Campero atrasito', 'cooomooo', 'bien','olaaa');
-CALL sp_AgregarProveedor(3, '1234567890', 'Juan', 'Pérez', '123 Main Street', 'Empresa A', 'Juan Pérez', 'www.empresaA.com');
-CALL sp_AgregarProveedor(4, '0987654321', 'María', 'González', '456 Oak Avenue', 'Empresa B', 'María González', 'www.empresaB.com');
-CALL sp_AgregarProveedor(5, '1357924680', 'Carlos', 'López', '789 Elm Street', 'Empresa C', 'Carlos López', 'www.empresaC.com');
-CALL sp_AgregarProveedor(6, '2468013579', 'Laura', 'Martínez', '321 Pine Street', 'Empresa D', 'Laura Martínez', 'www.empresaD.com');
-CALL sp_AgregarProveedor(7, '9876543210', 'Ana', 'Sánchez', '654 Cedar Avenue', 'Empresa E', 'Ana Sánchez', 'www.empresaE.com');
+CALL sp_AgregarProveedor(1, '1234567890', 'Juan', 'Pérez', '123 Main Street', 'Empresa A', 'Juan Pérez', 'www.empresaA.com');
+CALL sp_AgregarProveedor(2, '0987654321', 'María', 'González', '456 Oak Avenue', 'Empresa B', 'María González', 'www.empresaB.com');
+CALL sp_AgregarProveedor(3, '1357924680', 'Carlos', 'López', '789 Elm Street', 'Empresa C', 'Carlos López', 'www.empresaC.com');
+CALL sp_AgregarProveedor(4, '2468013579', 'Laura', 'Martínez', '321 Pine Street', 'Empresa D', 'Laura Martínez', 'www.empresaD.com');
+CALL sp_AgregarProveedor(5, '9876543210', 'Ana', 'Sánchez', '654 Cedar Avenue', 'Empresa E', 'Ana Sánchez', 'www.empresaE.com');
 
 
 

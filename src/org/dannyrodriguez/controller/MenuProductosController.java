@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +27,7 @@ import org.dannyrodriguez.bean.Productos;
 import org.dannyrodriguez.bean.Proveedor;
 import org.dannyrodriguez.bean.TipoDeProducto;
 import org.dannyrodriguez.db.Conexion;
+import org.dannyrodriguez.report.GenerarReportes;
 import org.dannyrodriguez.system.Principal;
 
 public class MenuProductosController implements Initializable {
@@ -422,6 +425,28 @@ public class MenuProductosController implements Initializable {
 
     public void setEscenarioPrincipal(Principal escenarioPrincipal) {
         this.escenarioPrincipal = escenarioPrincipal;
+    }
+    
+    public void reporte(){
+        switch (tipoDeOperaciones) {
+            case NULL:
+                imprimirReporte();
+                break;
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnEliminar.setText("Editar");
+                btnReporte.setText("Reportes");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                tipoDeOperaciones = MenuProductosController.operaciones.NULL;
+        }
+    }
+    
+    public void imprimirReporte(){
+        Map parametros = new HashMap();
+        parametros.put("codigoProducto", null);
+        GenerarReportes.mostrarReportesProductos("Reporte_Productos.jasper", "reporte de Productos", parametros);
     }
 
     

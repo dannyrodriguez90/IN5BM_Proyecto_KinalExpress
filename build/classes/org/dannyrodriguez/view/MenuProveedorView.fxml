@@ -157,7 +157,7 @@
                <effect>
                   <DropShadow />
                </effect></Button>
-            <Button fx:id="btnReportesProveedores" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="56.0" prefWidth="108.0" style="-fx-background-color: #F7BFBE;" text="Reportes" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <Button fx:id="btnReportesProveedores" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#reporte" prefHeight="56.0" prefWidth="108.0" style="-fx-background-color: #F7BFBE;" text="Reportes" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                </GridPane.margin>

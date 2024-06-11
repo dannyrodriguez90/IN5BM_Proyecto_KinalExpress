@@ -4,6 +4,8 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +22,7 @@ import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
 import org.dannyrodriguez.bean.Clientes;
 import org.dannyrodriguez.db.Conexion;
+import org.dannyrodriguez.report.GenerarReportes;
 import org.dannyrodriguez.system.Principal;
 
 public class MenuClientesController implements Initializable {
@@ -312,6 +315,27 @@ public class MenuClientesController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void reporte(){
+        switch (tipoDeOperaciones) {
+            case NINGUNO:
+                imprimirReporte();
+                break;
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnEliminarCliente.setText("Editar");
+                btnReportesClientes.setText("Reportes");
+                btnAgregarCliente.setDisable(false);
+                btnEliminarCliente.setDisable(false);
+                tipoDeOperaciones = operaciones.NINGUNO;
+        }
+    }
+    
+    public void imprimirReporte(){
+        Map parametros = new HashMap();
+        parametros.put("clienteId", null);
+        GenerarReportes.mostrarReportes("Reporte_Cliente.jasper", "reporte de Clientes", parametros);
     }
 
     @FXML
