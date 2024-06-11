@@ -12,7 +12,7 @@ public class Conexion {
     public Conexion() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/DBKinalSpressIN5BM?useSSL=false", "root", "pitudo37d*");
+            conexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/DBKinalSpressIN5BM?useSSL=false", "root", "abc123**");
         } catch (ClassNotFoundException a) {
             a.printStackTrace();
         } catch (InstantiationException e) {

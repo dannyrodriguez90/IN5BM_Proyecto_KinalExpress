@@ -138,7 +138,7 @@ CREATE TABLE DetalleFactura (
 );
 
 
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'pitudo37d*';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'abc123**';
 ------------------------------------------------------------
 DELIMITER $$
 CREATE PROCEDURE sp_AgregarClientes (
@@ -229,7 +229,7 @@ END $$
 
 DELIMITER ;
 
-CALL sp_editarClientes(2,'0987654321','María','González','fhf','5555678','mariagonzalez@example.com');
+CALL sp_editarClientes(2,'0987654321','María','González','123 Main Street','5555678','mariagonzalez@example.com');
 
 
 Delimiter $$
@@ -342,7 +342,7 @@ END $$
 
 DELIMITER ;
 
-CALL sp_editarProveedor(1,'viendo','con los ojos','omg','estas hablando','partido','omg','olaa');
+CALL sp_editarProveedor(1, '1234567890', 'Danny', 'Rodriguez', '123 Main Street', 'Empresa A', 'Juan Pérez', 'www.empresaA.com');
 
 
 Delimiter $$
@@ -1205,3 +1205,8 @@ BEGIN
 END $$
 DELIMITER ;
 
+select * from DetalleFactura
+	join Factura on DetalleFactura.numeroFactura = Factura.numeroFactura
+    join Clientes on Factura.clienteId = Clientes.clienteId
+    join Productos on DetalleFactura.codigoProducto = Productos.codigoProducto
+	where Factura.numeroFactura = 2;
