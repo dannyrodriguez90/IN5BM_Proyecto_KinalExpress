@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +27,7 @@ import org.dannyrodriguez.bean.Clientes;
 import org.dannyrodriguez.bean.Empleados;
 import org.dannyrodriguez.bean.Factura;
 import org.dannyrodriguez.db.Conexion;
+import org.dannyrodriguez.report.GenerarReportes;
 import org.dannyrodriguez.system.Principal;
 
 public class MenuFacturaController implements Initializable {
@@ -386,6 +389,30 @@ public class MenuFacturaController implements Initializable {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un elemento.");
             }
         }
+    }
+
+    
+    public void reporte(){
+        switch (tipoDeOperaciones) {
+            case NULL:
+                imprimirReporte();
+                break;
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnEliminar.setText("Editar");
+                btnReporte.setText("Reportes");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                tipoDeOperaciones = MenuFacturaController.operaciones.NULL;
+        }
+    }
+    
+    public void imprimirReporte(){
+        Map parametros = new HashMap();
+        int factID = ((Factura)tvFactura.getSelectionModel().getSelectedItem()).getNumeroFactura();
+        parametros.put("factID", factID);
+        GenerarReportes.mostrarReportesFactura("Reporte_Factura.jasper", "reporte De Factura", parametros);
     }
 
     

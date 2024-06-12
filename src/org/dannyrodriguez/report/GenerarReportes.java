@@ -48,5 +48,19 @@ public class GenerarReportes {
                 e.printStackTrace();
         }
     }
+     public static void mostrarReportesFactura(String nombreReporte, String titulo, Map parametros){
+        InputStream reporte = GenerarReportes.class.getResourceAsStream(nombreReporte);
+        try{
+            JasperReport Reporte_Factura = (JasperReport) JRLoader.loadObject(reporte);
+            JasperPrint reporteimpreso = JasperFillManager.fillReport(Reporte_Factura, parametros, Conexion.getInstance().getConexion());
+            JasperViewer visor = new JasperViewer(reporteimpreso, false);
+            visor.setTitle(titulo);
+            visor.setVisible(true);
+        }catch (Exception e){
+                e.printStackTrace();
+        }
+    }
+     
+
 
 }

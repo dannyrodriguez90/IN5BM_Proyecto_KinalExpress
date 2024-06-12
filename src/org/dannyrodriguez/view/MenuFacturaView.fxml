@@ -91,7 +91,7 @@
                </effect></ComboBox>
          </children>
       </GridPane>
-      <GridPane layoutX="486.0" layoutY="165.0" prefHeight="212.0" prefWidth="110.0">
+      <GridPane layoutX="486.0" layoutY="165.0" prefHeight="222.0" prefWidth="110.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -124,14 +124,14 @@
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                </GridPane.margin></Button>
-            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="43.0" prefWidth="138.0" style="-fx-background-color: c9e9fc;" text="Reporte" GridPane.rowIndex="3">
+            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#reporte" prefHeight="43.0" prefWidth="138.0" style="-fx-background-color: c9e9fc;" text="Reporte" GridPane.rowIndex="3">
                <effect>
                   <DropShadow />
                </effect>
                <GridPane.margin>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                </GridPane.margin></Button>
-            <Button fx:id="btnRegresar" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="44.0" prefWidth="107.0" style="-fx-background-color: c9e9fc;" text="Regresar" GridPane.rowIndex="4">
+            <Button fx:id="btnRegresar" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="48.0" prefWidth="113.0" style="-fx-background-color: c9e9fc;" text="Regresar" GridPane.rowIndex="4">
                <effect>
                   <DropShadow />
                </effect>

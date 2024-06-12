@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte_Proveedores" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1aa7863f-eb50-4e51-981f-2c3abe558468">
-	<property name="ireport.zoom" value="1.6105100000000048"/>
+	<property name="ireport.zoom" value="1.0000000000000029"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="369"/>
+	<property name="ireport.y" value="510"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[CALL sp_ListarProveedor()]]>
@@ -34,8 +34,8 @@
 	<background>
 		<band height="802" splitType="Stretch">
 			<image>
-				<reportElement x="0" y="0" width="555" height="802" uuid="6f0ebe6d-0ef5-4701-a44b-2f1252d415ad"/>
-				<imageExpression><![CDATA["C:\\Users\\Informatica\\Desktop\\IN5BM_Proyecto_KinalExpress\\src\\org\\dannyrodriguez\\images\\Reportes_Proveedores.jpg"]]></imageExpression>
+				<reportElement x="0" y="0" width="555" height="802" uuid="4e85a8f7-540a-4240-b2f0-592c4d62c84a"/>
+				<imageExpression><![CDATA["C:\\Users\\Asus 3050\\OneDrive\\Desktop\\IN5BM_Proyecto_KinalExpress\\src\\org\\dannyrodriguez\\images\\Reportes_Proveedores.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</background>
